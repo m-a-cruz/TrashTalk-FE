@@ -4,6 +4,9 @@ import RegisterPage from "./components/RegisterPage";
 import Dashboard from "./components/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import NotFoundPage from "./components/NotFoundPage";
+import ForgotPasswordPage from "./components/ForgotPasswordPage";
+import TermsConditionPage from "./components/TermsConditionPage";
+import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
 import "./App.css";
 
 function App() {
@@ -13,7 +16,9 @@ function App() {
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        {/* <Route path="/logout" element={<Logout />} /> */}
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/terms-and-conditions" element={<TermsConditionPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
         {/* Protected Routes */}
