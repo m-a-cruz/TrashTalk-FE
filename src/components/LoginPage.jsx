@@ -12,7 +12,7 @@ const LoginPage = () => {
     e.preventDefault(); // Prevent form submission
 
     try {
-      const response = await axios.post(`${API}/login`, { email, password }, { withCredentials: true });
+      const response = await axios.post(`${API}login`, { email, password }, { withCredentials: true });
       if (response && response.status === 200) {
         navigate("/dashboard"); // Redirect to dashboard
       }

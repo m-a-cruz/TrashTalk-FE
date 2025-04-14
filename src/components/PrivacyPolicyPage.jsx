@@ -6,4 +6,4 @@ function PrivacyPolicyPage() {
   )
 }
 
-export default PrivacyPolicyPage
+export default PrivacyPolicyPage;

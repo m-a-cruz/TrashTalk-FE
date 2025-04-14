@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
   const API = import.meta.env.VITE_AUTH_API_URL;
-  const [formData, setFormData] = useState({ firstname: "", lastname: "", email: "", accessCode: "", password: "", confirmPassword: "",termsAccepted: false,});
+  const [formData, setFormData] = useState({ });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -18,19 +19,17 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { firstname, lastname, termsAccepted, ...filteredFormData } = formData;
     const name = `${firstname} ${lastname}`;
     const dataToSubmit = { ...filteredFormData, name };
 
     try {
-      const response = await axios.post(`${API}/register`, dataToSubmit, {
+      const response = await axios.post(`${API}register`, dataToSubmit, {
         headers: { "Content-Type": "application/json" },
       });
-
       if (response && response.status === 200) {
-        console.log("Register successful:", response.data);
-
+        setErrors({});
+        setFormData({ });
         navigate("/login");
       }
     } catch (error) {
@@ -58,7 +57,6 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-
 
 const InputField = ({ label, type, name, value, onChange, error }) => {
   return (
