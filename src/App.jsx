@@ -29,8 +29,8 @@ function App() {
         {/* Protected Routes */}
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path="/monitor" element={<PrivateRoute><Monitor /></PrivateRoute>} />
-        <Route path="/insights" element={<PrivateRoute><Insights /></PrivateRoute>} />
-        <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
+        {/* <Route path="/insights" element={<PrivateRoute><Insights /></PrivateRoute>} />
+        <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} /> */}
 
         {/* Default Route */}
         <Route path="/" element={<LoginPage />} />
