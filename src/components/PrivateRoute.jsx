@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>; // Show loader while verifying
   }
 
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
 export default ProtectedRoute;

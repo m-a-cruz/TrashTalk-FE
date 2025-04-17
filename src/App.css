@@ -1,8 +1,13 @@
 #root {
-  max-width: 1800px;
+  /* max-width: 1800px; */
+  width: 100%;
+  /* height: 1000px; */
   margin: 0;
   padding: 0rem;
   text-align: left;
+  background-color: #EFEFEF;
+  height: 100vh;
+  display: block;
 }
 
 .logo {

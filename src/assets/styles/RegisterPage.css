@@ -1,81 +1,195 @@
 .registration-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .registration-form h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .registration-form h2 {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
-  }
-  
-  .registration-form form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.registration-form h1 {
+  text-align: center;
+  color: #333;
+}
+
+.registration-form h2 { 
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+}
+
+.registration-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.registration-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.registration-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="email"],
+.registration-form input[type="password"],
+.registration-form input[type="checkbox"] {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.registration-form input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+.registration-form button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.registration-form button:hover {
+  background-color: #0056b3;
+}
+
+.registration-form p {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.registration-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.registration-form a:hover {
+  text-decoration: underline;
+}
+
+.name-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.terms-section {
+    margin: 24px 0;
+}
+
+.checkbox-label {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .registration-form div {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .registration-form label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .registration-form input[type="text"],
-  .registration-form input[type="email"],
-  .registration-form input[type="password"],
-  .registration-form input[type="checkbox"] {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-  }
-  
-  .registration-form input[type="checkbox"] {
-    width: auto;
-    margin-right: 8px;
-  }
-  
-  .registration-form button {
-    padding: 10px 15px;
+    align-items: center;
+    gap: 8px;
+    font-family: "Poppins-Regular", Helvetica;
     font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
+    color: #000000;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
     cursor: pointer;
-  }
-  
-  .registration-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .registration-form p {
-    text-align: center;
-    margin-top: 15px;
-  }
-  
-  .registration-form a {
-    color: #007bff;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: white;
+    border: 1px solid #E8E8E8;
+    border-radius: 4px;
+    position: relative;
+    outline: none;
+}
+
+.checkbox-label input[type="checkbox"]:checked {
+    background-color: #139637;
+    border-color: #139637;
+}
+
+.checkbox-label input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    left: 50%;
+    top: 43%;
+    transform: translate(-50%, -50%);
+}
+
+.terms-link {
+    color: #139637;
     text-decoration: none;
-  }
-  
-  .registration-form a:hover {
+    font-size: 16px;
+}
+
+.terms-link:hover {
     text-decoration: underline;
-  }
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.password-field .input-field { 
+    margin-bottom: 0;
+    padding-right: 45px;
+}
+
+/* .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #666666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-toggle:hover {
+    color: #139637;
+} */
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  z-index: 1;
+}
+
+.password-toggle:hover {
+  color: #139637;
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px; 
+  margin-bottom: 10px;
+}

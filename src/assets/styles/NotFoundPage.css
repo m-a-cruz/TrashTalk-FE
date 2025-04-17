@@ -1,41 +1,106 @@
 .not-found-container {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 20px;
+    min-height: 100vh;
+    min-width: 100vw;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 85vh;
+    background-color: #FCFCFF;
+    /* padding: 20px; */
+    font-family: "Poppins", sans-serif;
+}
+
+.not-found-content {
+    text-align: center;
+    max-width: 600px;
+    padding: 40px;
+    background-color: FCFCFF;
+    /* border-radius: 20px; */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 h1 {
-    font-size: 6rem;
+    font-size: 120px;
+    color: #139637;
     margin: 0;
-    font-weight: 900;
+    line-height: 1;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 32px;
+    color: #333;
+    margin: 0 0 30px 0;
+    font-weight: 600;
 }
 
 p {
-    font-size: 1.2rem;
-    margin: 10px 0 20px;
-}
-
-a {
-    color: #007BFF;
-    text-decoration: none;
-    font-size: 1.2rem;
-}
-
-a:hover {
-    text-decoration: underline;
+    font-size: 18px;
+    color: #666;
+    margin: 20px 0 30px;
+    line-height: 1.5;
 }
 
 .not-found-image {
-    width: 500px;
-    display: block;
-    margin: 0 auto;
-    position: center;
-    z-index: 1; 
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.not-found-image img {
+    max-height: 500px;
+    width: auto;
+    object-fit: contain;
+}
+
+.home-button {
+    display: inline-block;
+    background-color: #139637;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 100px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .not-found-image img {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .not-found-content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 80px;
+    }
+
+    .not-found-image img {
+        max-height: 200px;
+    }
 }
