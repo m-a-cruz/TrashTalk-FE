@@ -38,8 +38,13 @@ function RegisterPage() {
 
   return (
     <div className="LOGIN-TRASHTALK">
-      <div className="login-container">
-        <h1 className="app-title">TrashTalk</h1>
+      <div className="image-section">
+        <div className="image-content">
+
+          {/* <p className="image-text">Smart Waste Management System</p> */}
+        </div>
+      </div>
+      <div className="login-container">          <h1 className="app-title">TrashTalk</h1>
         <h2 className="page-title">Register</h2>
 
         <form onSubmit={handleSubmit} className="login-form">
@@ -47,7 +52,7 @@ function RegisterPage() {
             <input
               type="text"
               className="input-field"
-              placeholder="Firstname"
+              placeholder="First Name"
               value={formData.firstname}
               onChange={(e) => setFormData({...formData, firstname: e.target.value})}
               required
@@ -55,13 +60,13 @@ function RegisterPage() {
             <input
               type="text"
               className="input-field"
-              placeholder="Lastname"
+              placeholder="Last Name"
               value={formData.lastname}
               onChange={(e) => setFormData({...formData, lastname: e.target.value})}
               required
             />
           </div>
-          
+
           <input
             type="email"
             className="input-field"
@@ -146,22 +151,21 @@ function RegisterPage() {
                 onChange={(e) => setFormData({...formData, termsAccepted: e.target.checked})}
                 required
               />
-              <span>I agree to the </span>
-              <a href="/terms" className="terms-link">Terms & Conditions</a>
+              I agree to the <a href="/terms" className="terms-link">Terms and Conditions</a>
             </label>
           </div>
 
           <button type="submit" className="login-button">
-            Create Account
+            Register
           </button>
 
           <div className="register-section">
             <span className="register-text">Already have an account?</span>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }} className="register-link">
-              Log in
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/login"); }} className="register-link">
+              Log In
             </a>
           </div>
-      </form>
+        </form>
 
         <div className="footer">
           <a href="/terms">Terms and Conditions</a>

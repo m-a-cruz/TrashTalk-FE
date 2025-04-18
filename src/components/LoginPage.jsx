@@ -7,12 +7,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const API = import.meta.env.VITE_AUTH_API_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
+ 
     try {
       const response = await axios.post(`${API}login`, { email, password }, { withCredentials: true });
       if (response && response.status === 200) {
@@ -20,13 +22,20 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="LOGIN-TRASHTALK">
+      <div className="image-section">
+        <div className="image-content">
+
+          {/* <p className="image-text">Smart Waste Management System</p> */}
+        </div>
+      </div>
       <div className="login-container">
-        <h1 className="app-title">TrashTalk</h1>
+      <h1 className="app-title">TrashTalk</h1>
         <h2 className="page-title">Log In</h2>
 
         <form onSubmit={handleLogin} className="login-form">
@@ -37,6 +46,7 @@ const LoginPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={isLoading}
           />
           
           <div className="password-field">
@@ -47,12 +57,14 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
             />
             <button 
               type="button" 
               className="password-toggle"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
+              disabled={isLoading}
             >
               {showPassword ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
@@ -68,17 +80,31 @@ const LoginPage = () => {
             </button>
           </div>
 
-          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/forgot-password"); }} className="forgot-password">
+          <a 
+            href="#" 
+            onClick={(e) => { 
+              e.preventDefault(); 
+              if (!isLoading) navigate("/forgot-password"); 
+            }} 
+            className={`forgot-password ${isLoading ? 'disabled' : ''}`}
+          >
             Forgot Password?
           </a>
 
-          <button type="submit" className="login-button">
-            Log In
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Log In'}
           </button>
 
           <div className="register-section">
             <span className="register-text">Don't have an account?</span>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/register"); }} className="register-link">
+            <a 
+              href="#" 
+              onClick={(e) => { 
+                e.preventDefault(); 
+                if (!isLoading) navigate("/register"); 
+              }} 
+              className={`register-link ${isLoading ? 'disabled' : ''}`}
+            >
               Register
             </a>
           </div>

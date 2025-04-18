@@ -5,6 +5,81 @@ import Navbar from "./Navbar";
 import "../assets/styles/Dashboard.css";
 import axios from "axios";
 
+// Sample data for the charts
+const binData = {
+  bin1: {
+    wasteData: [
+      { name: 'Mon', waste: 40 },
+      { name: 'Tue', waste: 30 },
+      { name: 'Wed', waste: 20 },
+      { name: 'Thu', waste: 27 },
+      { name: 'Fri', waste: 18 },
+      { name: 'Sat', waste: 23 },
+      { name: 'Sun', waste: 34 }
+    ],
+    wasteComposition: [
+      { name: 'Organic', value: 40 },
+      { name: 'Plastic', value: 25 },
+      { name: 'Paper', value: 20 },
+      { name: 'Metal', value: 15 }
+    ],
+    efficiencyData: [
+      { name: 'Week 1', efficiency: 85 },
+      { name: 'Week 2', efficiency: 78 },
+      { name: 'Week 3', efficiency: 92 },
+      { name: 'Week 4', efficiency: 88 }
+    ]
+  },
+  bin2: {
+    wasteData: [
+      { name: 'Mon', waste: 35 },
+      { name: 'Tue', waste: 25 },
+      { name: 'Wed', waste: 15 },
+      { name: 'Thu', waste: 22 },
+      { name: 'Fri', waste: 13 },
+      { name: 'Sat', waste: 18 },
+      { name: 'Sun', waste: 29 }
+    ],
+    wasteComposition: [
+      { name: 'Organic', value: 35 },
+      { name: 'Plastic', value: 30 },
+      { name: 'Paper', value: 25 },
+      { name: 'Metal', value: 10 }
+    ],
+    efficiencyData: [
+      { name: 'Week 1', efficiency: 80 },
+      { name: 'Week 2', efficiency: 75 },
+      { name: 'Week 3', efficiency: 88 },
+      { name: 'Week 4', efficiency: 82 }
+    ]
+  },
+  bin3: {
+    wasteData: [
+      { name: 'Mon', waste: 45 },
+      { name: 'Tue', waste: 35 },
+      { name: 'Wed', waste: 25 },
+      { name: 'Thu', waste: 32 },
+      { name: 'Fri', waste: 23 },
+      { name: 'Sat', waste: 28 },
+      { name: 'Sun', waste: 39 }
+    ],
+    wasteComposition: [
+      { name: 'Organic', value: 45 },
+      { name: 'Plastic', value: 20 },
+      { name: 'Paper', value: 15 },
+      { name: 'Metal', value: 20 }
+    ],
+    efficiencyData: [
+      { name: 'Week 1', efficiency: 90 },
+      { name: 'Week 2', efficiency: 82 },
+      { name: 'Week 3', efficiency: 95 },
+      { name: 'Week 4', efficiency: 88 }
+    ]
+  }
+};
+
+const COLORS = ['#4CAF50', '#2196F3', '#FFC107', '#F44336'];
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_AUTH_API_URL;

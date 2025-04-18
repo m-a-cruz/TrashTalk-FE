@@ -42,22 +42,30 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="LOGIN-TRASHTALK">
-      <div className="login-container forgot-password-container">
+    <div className="FORGOT-PASSWORD">
+      <div className="forgot-password-container">
         {/* <h1 className="app-title">TrashTalk</h1> */}
         <p className="page-title">Forgot Password?</p>
 
-        {modalStep === 1 && (
+        {modalStep === 1 && ( 
           <>
             <p className="subtitle">
               Don't worry! Enter your email address and we'll send you a code to reset your password
             </p>
 
-            <form onSubmit={handleSubmitEmail} className="login-form">
+            <form onSubmit={handleSubmitEmail} className="forgot-password-form">
               <input
-                type="email" className="input-field" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                type="email" 
+                className="input-field" 
+                placeholder="Email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+              />
 
-              <button type="submit" className="login-button"> Submit </button>
+              <button type="submit" className="submit-button">
+                Submit
+              </button>
 
               <div className="back-to-login">
                 <a href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>
@@ -69,7 +77,7 @@ const ForgotPasswordPage = () => {
         )}
 
         {modalStep === 2 && (
-          <form onSubmit={handleResetPassword} className="login-form">
+          <form onSubmit={handleResetPassword} className="forgot-password-form">
             <p className="subtitle">
               An authentication code has been sent to your email.
             </p>
@@ -98,7 +106,7 @@ const ForgotPasswordPage = () => {
               required
             />
 
-            <button type="submit" className="login-button">
+            <button type="submit" className="submit-button">
               Reset Password
             </button>
 
@@ -115,7 +123,7 @@ const ForgotPasswordPage = () => {
           <div className="success-message">
             <p className="subtitle">Your password has been reset successfully.</p>
             <button 
-              className="login-button"
+              className="submit-button"
               onClick={() => navigate("/login")}
             >
               Back to Login
@@ -124,8 +132,8 @@ const ForgotPasswordPage = () => {
         )}
 
         <div className="footer">
-          <a href="/terms-and-conditions">Terms and Conditions</a>
-          <a href="/privacy-policy">Privacy and Policy</a>
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy">Privacy and Policy</a>
         </div>
       </div>
     </div>

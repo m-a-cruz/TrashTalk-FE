@@ -1,0 +1,158 @@
+.report-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.report-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(76, 175, 80, 0.1);
+}
+
+.report-title {
+  color: #1a3e1f;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.report-subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.section:last-child {
+  margin-bottom: 1.5rem;
+}
+
+.text-discussion {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  color: #2e7d32;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.text-discussion p {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.text-discussion strong {
+  color: #1a3e1f;
+  font-weight: 600;
+}
+
+.key-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metric-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.metric-value {
+  color: #2e7d32;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.waste-trends {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+}
+
+.waste-trends h4 {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.waste-trends ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.waste-trends li {
+  color: #333;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.waste-trends li:before {
+  content: "•";
+  color: #4CAF50;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.chart-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  height: 300px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(76, 175, 80, 0.1);
+}
+
+.download-button {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.download-button:hover {
+  background-color: #45a049 !important;
+}
+
+@media (max-width: 768px) {
+  .report-modal-content {
+    padding: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .key-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+} 

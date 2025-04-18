@@ -44,14 +44,14 @@ const SetNewPassword = () => {
   };
 
   return (
-    <div className="LOGIN-TRASHTALK">
-      <div className="login-container forgot-password-container">
+    <div className="set-new-password">
+      <div className="reset-password-container">
         <p className="page-title">Set new password</p>
         <p className="subtitle">
-          An authentication code has been sent to you email.
+          An authentication code has been sent to your email.
         </p>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form onSubmit={handleSubmit} className="reset-password-form">
           <input
             type="text"
             className="input-field"
@@ -104,7 +104,7 @@ const SetNewPassword = () => {
             <a href="#" onClick={handleResendCode}>Resend</a>
           </div>
 
-          <button type="submit" className="login-button">
+          <button type="submit" className="verify-button">
             Verify
           </button>
 
@@ -116,8 +116,8 @@ const SetNewPassword = () => {
         </form>
 
         <div className="footer">
-          <a href="/terms-and-conditions">Terms and Conditions</a>
-          <a href="/privacy-policy">Privacy and Policy</a>
+          <a href="/terms">Terms and Conditions</a>
+          <a href="/privacy">Privacy and Policy</a>
         </div>
       </div>
     </div>
