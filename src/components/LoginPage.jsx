@@ -8,7 +8,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const API = import.meta.env.VITE_AUTH_API_URL;
 
   const handleLogin = async (e) => {
