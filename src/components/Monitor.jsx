@@ -31,7 +31,7 @@ const Monitor = () => {
     // }, 5000); // 5000ms = 5 seconds
     // return () => clearInterval(interval);
   }, []); 
-
+ 
   return (
     <div className="monitor-wrapper">
       <Navbar />

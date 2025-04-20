@@ -5,6 +5,7 @@
   padding: 1rem;
   padding-top: 80px;
   box-sizing: border-box;
+  /* background: #c56c23 */
 }
 
 .monitor-container {
@@ -21,7 +22,7 @@
   align-items: center;
   margin-bottom: 1rem;
   padding: 1rem; 
-  background: rgb(255, 255, 255);
+  background: white;
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(76, 175, 80, 0.1);
@@ -46,6 +47,7 @@
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 2rem;
   padding: 1rem;
+  /* background: #c56c23 */
 }
 
 .monitor-card {

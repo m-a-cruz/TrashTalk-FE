@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../assets/styles/RegisterPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 function RegisterPage() {
   const API = import.meta.env.VITE_AUTH_API_URL;
@@ -16,11 +17,56 @@ function RegisterPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    if (!formData.firstname.trim()) {
+      setError("First name is required");
+      return false;
+    }
+    if (!formData.lastname.trim()) {
+      setError("Last name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError("Email is required");
+      return false;
+    }
+    if (!formData.email.includes("@")) {
+      setError("Please enter a valid email address");
+      return false;
+    }
+    if (!formData.accessCode.trim()) {
+      setError("Access code is required");
+      return false;
+    }
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+    if (!formData.termsAccepted) {
+      setError("Please accept the terms and conditions");
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstname, lastname, termsAccepted, ...filteredFormData } = formData;
+    setError("");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    const { firstname, lastname, termsAccepted, confirmPassword, ...filteredFormData } = formData;
     const name = `${firstname} ${lastname}`;
     const dataToSubmit = { ...filteredFormData, name };
 
@@ -32,8 +78,30 @@ function RegisterPage() {
         navigate("/login");
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      if (error.response) {
+        switch (error.response.status) {
+          case 409:
+            setError("Email already registered");
+            break;
+          case 400:
+            setError("Invalid access code");
+            break;
+          default:
+            setError("Registration failed. Please try again");
+        }
+      } else if (error.request) {
+        setError("Unable to connect to the server. Please check your internet connection");
+      } else {
+        setError("An unexpected error occurred. Please try again");
+      }
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData({ ...formData, [field]: value });
+    setError(""); // Clear error when user types
   };
 
   return (
@@ -48,22 +116,26 @@ function RegisterPage() {
         <h2 className="page-title">Register</h2>
 
         <form onSubmit={handleSubmit} className="login-form">
+          <ErrorMessage message={error} />
+
           <div className="name-fields">
             <input
               type="text"
               className="input-field"
               placeholder="First Name"
               value={formData.firstname}
-              onChange={(e) => setFormData({...formData, firstname: e.target.value})}
+              onChange={(e) => handleInputChange('firstname', e.target.value)}
               required
+              disabled={isLoading}
             />
             <input
               type="text"
               className="input-field"
               placeholder="Last Name"
               value={formData.lastname}
-              onChange={(e) => setFormData({...formData, lastname: e.target.value})}
+              onChange={(e) => handleInputChange('lastname', e.target.value)}
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -72,8 +144,9 @@ function RegisterPage() {
             className="input-field"
             placeholder="Email"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={(e) => handleInputChange('email', e.target.value)}
             required
+            disabled={isLoading}
           />
 
           <input
@@ -81,8 +154,9 @@ function RegisterPage() {
             className="input-field"
             placeholder="Access Code"
             value={formData.accessCode}
-            onChange={(e) => setFormData({...formData, accessCode: e.target.value})}
+            onChange={(e) => handleInputChange('accessCode', e.target.value)}
             required
+            disabled={isLoading}
           />
 
           <div className="password-field">
@@ -91,14 +165,16 @@ function RegisterPage() {
               className="input-field"
               placeholder="Set Password"
               value={formData.password}
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
+              onChange={(e) => handleInputChange('password', e.target.value)}
               required
+              disabled={isLoading}
             />
             <button 
               type="button" 
               className="password-toggle"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Hide password" : "Show password"}
+              disabled={isLoading}
             >
               {showPassword ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
@@ -120,14 +196,16 @@ function RegisterPage() {
               className="input-field"
               placeholder="Confirm Password"
               value={formData.confirmPassword}
-              onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+              onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
               required
+              disabled={isLoading}
             />
             <button 
               type="button" 
               className="password-toggle"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+              disabled={isLoading}
             >
               {showConfirmPassword ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
@@ -148,20 +226,28 @@ function RegisterPage() {
               <input
                 type="checkbox"
                 checked={formData.termsAccepted}
-                onChange={(e) => setFormData({...formData, termsAccepted: e.target.checked})}
+                onChange={(e) => handleInputChange('termsAccepted', e.target.checked)}
                 required
+                disabled={isLoading}
               />
               I agree to the <a href="/terms" className="terms-link">Terms and Conditions</a>
             </label>
           </div>
 
-          <button type="submit" className="login-button">
-            Register
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? 'Registering...' : 'Register'}
           </button>
 
           <div className="register-section">
             <span className="register-text">Already have an account?</span>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/login"); }} className="register-link">
+            <a 
+              href="#" 
+              onClick={(e) => { 
+                e.preventDefault(); 
+                if (!isLoading) navigate("/login"); 
+              }} 
+              className={`register-link ${isLoading ? 'disabled' : ''}`}
+            >
               Log In
             </a>
           </div>

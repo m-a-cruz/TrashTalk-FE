@@ -2,17 +2,41 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/LoginPage.css";
+import ErrorMessage from "./ErrorMessage";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate(); 
   const API = import.meta.env.VITE_AUTH_API_URL;
 
+  const validateForm = () => {
+    if (!email.trim()) {
+      setError("Email is required");
+      return false;
+    }
+    if (!password.trim()) {
+      setError("Password is required");
+      return false;
+    }
+    if (!email.includes("@")) {
+      setError("Please enter a valid email address");
+      return false;
+    }
+    return true;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
  
     try {
@@ -21,7 +45,27 @@ const LoginPage = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Login error:", error);
+      if (error.response) {
+        // Handle specific error responses from the server
+        switch (error.response.status) {
+          case 401:
+            setError("Invalid email or password");
+            break;
+          case 404:
+            setError("Account not found");
+            break;
+          case 403:
+            setError("Account is locked. Please contact support");
+            break;
+          default:
+            setError("An error occurred during login. Please try again");
+        }
+      } else if (error.request) {
+        setError("Unable to connect to the server. Please check your internet connection");
+      } else {
+        setError("An unexpected error occurred. Please try again");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -39,12 +83,17 @@ const LoginPage = () => {
         <h2 className="page-title">Log In</h2>
 
         <form onSubmit={handleLogin} className="login-form">
+          <ErrorMessage message={error} />
+          
           <input
             type="email"
             className="input-field"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError("");
+            }}
             required
             disabled={isLoading}
           />
@@ -55,7 +104,10 @@ const LoginPage = () => {
               className="input-field"
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               required
               disabled={isLoading}
             />

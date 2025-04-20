@@ -217,7 +217,7 @@ td {
     gap: 1rem;
     text-align: center;
   }
-
+ 
   .insights-details {
     grid-template-columns: 1fr;
   }

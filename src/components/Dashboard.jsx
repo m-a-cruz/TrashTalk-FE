@@ -5,13 +5,11 @@ import Navbar from "./Navbar";
 import "../assets/styles/Dashboard.css";
 import axios from "axios";
 
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_GAS_API_URL;
   const [selectedBin, setSelectedBin] = useState(1);
   const [charts, setCharts] = useState([]);
-
 
   const fetchCharts = async () => {
     try {
@@ -27,7 +25,7 @@ const Dashboard = () => {
   }, []);
   
   return (
-    <div className="dashboard-wrapper">
+    <div className="dashboard-wrapper"> 
       <Navbar />
       <div className="dashboard-container">
         <div className="dashboard-header">
@@ -37,7 +35,7 @@ const Dashboard = () => {
             <select 
               id="bin-select" 
               value={selectedBin} 
-              onChange={(e) => setSelectedBin(e.target.value)}
+              onChange={(e) => setSelectedBin(Number(e.target.value))}
               className="bin-dropdown"
             >
               {[...new Set(charts.map(chart => chart.bin))]
@@ -50,18 +48,47 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="dashboard-grid">
-          {charts.filter((chart) => chart.bin === selectedBin).map((chart, index) => (
-            <div key={index} className="dashboard-card">
+              <div className="dashboard-grid">
+        
+        {/* Top row: 3 charts side by side */}
+        <div className="dashboard-row-top">
+          {charts.filter(chart =>
+            ['chart-1-avgdaily', 'chart-1-mostactivegas', 'chart-1-percentage']
+              .includes(`chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`)
+          ).map((chart, index) => (
+            <div
+              key={index}
+              className={`dashboard-card chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
+            >
               <div className="chart-container">
-                <ResponsiveContainer width="100%" height={300}>
-                  <iframe src={chart.link}  title={chart.title}></iframe>
+                <ResponsiveContainer width="100%" height={500}>
+                  <iframe src={chart.link} title={chart.title}></iframe>
                 </ResponsiveContainer>
-                
               </div>
             </div>
           ))}
         </div>
+
+        {/* Full width charts */}
+        <div className="dashboard-row-full">
+          {charts.filter(chart =>
+            ['chart-1-hourlymonitoring', 'chart-1-totalgaslevel', 'chart-1-weeklytrend']
+              .includes(`chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`)
+          ).map((chart, index) => (
+            <div
+              key={index}
+              className={`dashboard-card chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
+            >
+              <div className="chart-container">
+                <ResponsiveContainer width="100%" height={500}>
+                  <iframe src={chart.link} title={chart.title}></iframe>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          ))}
+        </div>
+
+       </div>
       </div>
     </div>
   );

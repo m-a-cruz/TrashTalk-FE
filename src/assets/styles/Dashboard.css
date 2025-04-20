@@ -8,26 +8,27 @@
 }
 
 .dashboard-container {
-  padding: 2rem;
+  padding: 1rem;
   max-width: 1800px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
+  /* background: #ffffff; */
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
   background: white;
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(76, 175, 80, 0.1);
   transition: transform 0.3s ease;
-  width: 100%;
-  box-sizing: border-box;
+  /* width: 100%;
+  box-sizing: border-box; */
 }
 
 .dashboard-header:hover {
@@ -46,9 +47,9 @@
 .bin-selector {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   background: rgba(76, 175, 80, 0.05);
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem;
   border-radius: 12px;
   transition: all 0.3s ease;
 }
@@ -81,35 +82,99 @@
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.15);
 }
 
-.bin-dropdown:focus {
+/* .bin-dropdown:focus {
   outline: none;
   border-color: #4CAF50;
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-}
+} */
 
 .dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  padding: 0;
+  padding: 1rem;
   width: 100%;
   box-sizing: border-box;
 }
 
+.dashboard-row {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 .dashboard-card {
-  background: white;
+  background: rgb(255, 255, 255);
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  height: 100%;
+  flex: 1;
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(76, 175, 80, 0.1);
   position: relative;
   overflow: hidden;
-  width: 100%;
   box-sizing: border-box;
+}
+
+.chart-container {
+  flex: 1;
+  min-height: 300px;
+  margin-top: 1rem;
+  position: relative;
+  padding: 1rem;
+  background: rgba(11, 141, 15, 0.02);
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.chart-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Existing row styling for the top three charts (keeps them side-by-side) */
+.dashboard-row-top {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* New full-width row style */
+.dashboard-row-full {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Make individual full-width cards stretch the whole row */
+.chart-1-hourlymonitoring,
+.chart-1-totalgaslevel,
+.chart-1-weeklytrend {
+  width: 100%;
+}
+
+/* Chart-specific styles */
+.chart-1-avgdaily,
+.chart-1-mostactivegas,
+.chart-1-percentage {
+  flex: 1;
+  min-width: 300px;
+}
+
+.chart-1-hourlymonitoring,
+.chart-1-totalgaslevel,
+.chart-1-weeklytrend {
+  flex: 1;
+  min-width: 400px;
 }
 
 .dashboard-card::before {
@@ -154,16 +219,6 @@
   height: 3px;
   background: linear-gradient(135deg, #4CAF50, #2E7D32);
   border-radius: 3px;
-}
-
-.chart-container {
-  flex: 1;
-  min-height: 300px;
-  margin-top: 1rem;
-  position: relative;
-  padding: 1rem;
-  background: rgba(76, 175, 80, 0.02);
-  border-radius: 12px;
 }
 
 .logout-button {
@@ -218,5 +273,7 @@
 
   .dashboard-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
   }
-} 
+}
