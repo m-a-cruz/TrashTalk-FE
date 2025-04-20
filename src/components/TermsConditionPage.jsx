@@ -330,12 +330,3 @@ const items = [
   { href: "#miscellaneous", text: "Miscellaneous" },
   { href: "#contact-us", text: "Contact Us" },
 ]
-
-const Section = ({ id, href, text }) => {
-  return (
-    <section id={id} className="section">
-      <li>{text}</li>
-      <p>This is where the content for {text} will be displayed.</p>
-    </section>
-  );
-}

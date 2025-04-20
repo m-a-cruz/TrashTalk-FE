@@ -2,11 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { FaUser, FaCog, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/ProfileIcon.css";
+import axios from "axios";
 
 const ProfileIcon = () => {
   const [isOpen, setIsOpen] = useState(false);
   const profileRef = useRef(null);
   const navigate = useNavigate();
+  const API = import.meta.env.VITE_AUTH_API_URL;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -22,12 +24,15 @@ const ProfileIcon = () => {
     };
   }, []);
 
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log("Logout clicked");
-    navigate("/");
-  };
-
+  const handleLogout = async () => {
+    try {
+        await axios.post(`${API}logout`, null, { withCredentials: true });
+        navigate("/");
+        console.log("Logout successful");
+    } catch (error) {
+        console.error("Logout failed:", error);
+    }
+};
   return (
     <div className="profile-container" ref={profileRef}>
       <div className="profile-icon" onClick={() => setIsOpen(!isOpen)}>

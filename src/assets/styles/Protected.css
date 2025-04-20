@@ -1,0 +1,21 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f9fc;
+  }
+  
+  .loading-image {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .loading-text {
+    font-size: 1.2rem;
+    color: #444;
+    font-weight: 500;
+  }
+  

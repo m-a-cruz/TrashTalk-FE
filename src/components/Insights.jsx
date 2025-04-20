@@ -130,6 +130,10 @@ const Insights = () => {
     }
   ];
 
+  const API = import.meta.env.VITE_GAS_API_URL;
+  
+
+
   return (
     <div className="insights-wrapper">
       <Navbar />
