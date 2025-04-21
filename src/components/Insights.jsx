@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import "../assets/styles/Insights.css";
 import { Line } from 'react-chartjs-2';
@@ -13,6 +13,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -130,8 +131,25 @@ const Insights = () => {
     }
   ];
 
-  const API = import.meta.env.VITE_GAS_API_URL;
+  const API = import.meta.env.VITE_INS_API_URL;
+  const [insight, setInsight] = useState({});
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    fetchGasData();
+  }, []);
   
+  const fetchGasData = async () => {
+    try {
+      const response = await axios.get(`${API}forcast`, { withCredentials: true });
+      if (response.status === 200) {
+        console.log(response.data);
+        setData(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   return (
@@ -177,9 +195,9 @@ const Insights = () => {
                 <span className="status-dot alert">Alert</span>
               </div>
               <ul className="insights-list">
-                {insights.map((insight, index) => (
-                  <li key={index} className={`insight-item ${insight.status}`}>
-                    {insight.text}
+                {data.insights?.map((insight, index) => (
+                  <li key={index} className={`insight-item ${insight[index]}`}>
+                    {insight}
                   </li>
                 ))}
               </ul>

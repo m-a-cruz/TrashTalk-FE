@@ -1,5 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { FaBell, FaCheck, FaExclamationTriangle, FaInfoCircle, FaTrash } from "react-icons/fa";
+import {
+  FaBell,
+  FaCheck,
+  FaExclamationTriangle,
+  FaInfoCircle,
+  FaTrash
+} from "react-icons/fa";
 import axios from "axios";
 import "../assets/styles/NotificationIcon.css";
 
@@ -9,22 +15,16 @@ const NotificationIcon = () => {
   const notificationRef = useRef(null);
   const API = import.meta.env.VITE_GAS_API_URL;
 
-  // Fetch notifications from backend
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         const response = await axios.get(`${API}notifications`, { withCredentials: true });
         if (response.status === 200) {
-          // const formatted = response.data.map((item, index) => ({
-          //   id: item._id.$oid || index,
-          //   type: item.data.status.toLowerCase(), // maps 'Info', 'Warning', etc.
-          //   title: item.data.status,
-          //   message: item.data.message,
-          //   time: new Date(item.timestamp.$date).toLocaleString(),
-          //   read: false
-          // }));
-          // setNotifications(formatted);
-          console.log(response.data)
+          setNotifications(response.data.map((n) => ({
+            ...n,
+            id: n._id?.$oid || Math.random().toString(),
+            read: false
+          })));
         }
       } catch (err) {
         console.error("Failed to fetch notifications:", err);
@@ -34,7 +34,6 @@ const NotificationIcon = () => {
     fetchNotifications();
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (notificationRef.current && !notificationRef.current.contains(event.target)) {
@@ -58,7 +57,7 @@ const NotificationIcon = () => {
   };
 
   const getNotificationIcon = (type) => {
-    switch (type) {
+    switch (type?.toLowerCase()) {
       case 'warning': return <FaExclamationTriangle className="notification-type-icon warning" />;
       case 'success': return <FaCheck className="notification-type-icon success" />;
       case 'info': return <FaInfoCircle className="notification-type-icon info" />;
@@ -66,7 +65,7 @@ const NotificationIcon = () => {
     }
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter(n => n.data?.status === 'Active').length;
 
   return (
     <div className="notification-container" ref={notificationRef}>
@@ -79,27 +78,27 @@ const NotificationIcon = () => {
         <div className="notification-dropdown">
           <div className="dropdown-header">
             <h3>Notifications</h3>
-            <div className="header-actions">
-              {unreadCount > 0 && (
-                <button className="mark-all-read" onClick={markAllAsRead}>Mark all as read</button>
-              )}
-            </div>
+            {unreadCount > 0 && (
+              <button className="mark-all-read" onClick={markAllAsRead}>Mark all as read</button>
+            )}
           </div>
 
           <div className="notification-list">
             {notifications.length > 0 ? (
               notifications.map((n) => (
-                <div key={n.id} className={`notification-item ${n.read ? 'read' : 'unread'}`}>
+                <div key={n.id} className={`notification-item ${n.data?.status === 'Active' ? 'read' : 'unread'}`}>
                   <div className="notification-content">
-                    <div className="notification-icon-wrapper">{getNotificationIcon(n.type)}</div>
+                    <div className="notification-icon-wrapper">{getNotificationIcon(n.data?.type)}</div>
                     <div className="notification-details">
-                      <h4 className="notification-title">{n.title}</h4>
-                      <p className="notification-message">{n.message}</p>
-                      <span className="notification-time">{n.time}</span>
+                      <h4 className="notification-title">{n.data?.type}</h4>
+                      <p className="notification-message">{n.data?.message}</p>
+                      <span className="notification-time">{new Date(n.timestamp?.$date).toLocaleString()}</span>
                     </div>
                   </div>
                   <div className="notification-actions">
-                    {!n.read && <button className="mark-read-btn" onClick={() => markAsRead(n.id)}><FaCheck /></button>}
+                    {n.data?.status === 'Active' && (
+                      <button className="mark-read-btn" onClick={() => markAsRead(n.id)}><FaCheck /></button>
+                    )}
                     <button className="delete-btn" onClick={() => deleteNotification(n.id)}><FaTrash /></button>
                   </div>
                 </div>
