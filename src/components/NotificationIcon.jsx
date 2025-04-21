@@ -20,7 +20,7 @@ const NotificationIcon = () => {
     fetchNotifications();
     const interval = setInterval(() => {
       fetchNotifications(); // process -> then fetch
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
