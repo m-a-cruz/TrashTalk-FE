@@ -16,23 +16,29 @@ const NotificationIcon = () => {
   const API = import.meta.env.VITE_GAS_API_URL;
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axios.get(`${API}notifications`, { withCredentials: true });
-        if (response.status === 200) {
-          setNotifications(response.data.map((n) => ({
-            ...n,
-            id: n._id?.$oid || Math.random().toString(),
-            read: false
-          })));
-        }
-      } catch (err) {
-        console.error("Failed to fetch notifications:", err);
-      }
-    };
 
     fetchNotifications();
+    const interval = setInterval(() => {
+      fetchNotifications(); // process -> then fetch
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
+
+  
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(`${API}notifications`, { withCredentials: true });
+      if (response.status === 200) {
+        setNotifications(response.data.map((n) => ({
+          ...n,
+          id: n._id?.$oid || Math.random().toString(),
+          read: false
+        })));
+      }
+    } catch (err) {
+      console.error("Failed to fetch notifications:", err);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
