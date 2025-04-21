@@ -6,31 +6,37 @@ import axios from "axios";
 import { useState, useEffect  } from "react";
 
 const Monitor = () => {
-
   const API = import.meta.env.VITE_CAM_API_URL;
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [bins, setBins] = useState(3);
   const [detections, setDetections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const classCounts = useClassCounts(detections);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${API}latest`, { withCredentials: true });
-        if (response.status === 200) {
-          console.log(response.data);
-          setData(response.data);
-          setDetections(response.data.detections);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    fetchData(); // initial trigger on mount
+    const interval = setInterval(() => {
+      fetchData(); // process -> then fetch
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true); // start loading
+      const response = await axios.get(`${API}latest`, { withCredentials: true });
+      if (response.status === 200) {
+        console.log(response.data);
+        setData(response.data);
+        setDetections(response.data.detections);
       }
-    };
-    fetchData();
-    // const interval = setInterval(() => {
-    //   fetchData();
-    // }, 5000); // 5000ms = 5 seconds
-    // return () => clearInterval(interval);
-  }, []); 
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // stop loading
+    }
+  };
  
   return (
     <div className="monitor-wrapper">
@@ -46,11 +52,16 @@ const Monitor = () => {
             {Array.from({ length: bins }).map((_, index) => (
               <div className="monitor-card" key={index}>
                 <div className="bin-image-container">
-                  <img
-                    src={`data:image/jpeg;base64,${data.image_annotated_base64}`}
-                    alt="Detected"
-                    className="bin-image rounded max-w-md mb-4"
-                  />
+                  {loading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <img
+                        src={`data:image/jpeg;base64,${data.image_annotated_base64}`}
+                        alt="Detected"
+                        className="bin-image rounded max-w-md mb-4"
+                      />
+                    )
+                  }
                   <div className="bin-overlay">
                     <span className="bin-number">BIN {index + 1}</span>
                     <span className="bin-location">
@@ -61,12 +72,21 @@ const Monitor = () => {
                 <div className="bin-details">
                   <div className="detail-row">
                     <span className="detail-label">TIMESTAMP</span>
-                    <span className="detail-value">{data.timestamp}</span>
+                    <span className="detail-value">{data.timestamp && new Date(data.timestamp).toLocaleString()}</span>
                   </div>
                   <div className="detail-row">
                     <span className="detail-label">WASTE TYPE</span>
                     <span className="detail-value">
-                      {data.detections && data.detections.map((d) => d.class_name).join(", ")}
+                      {/* {detections && detections.map((d) => d.class_name).join(", ")} */}
+                      {Object.entries(classCounts).length > 0 ? (
+                        Object.entries(classCounts).map(([name, count]) => (
+                          <span key={name}>
+                            {count} {name} ,&nbsp;
+                          </span>
+                        ))
+                      ) : (
+                        <p>No detections.</p>
+                      )}
                     </span>
                   </div>
                 </div>
@@ -80,3 +100,22 @@ const Monitor = () => {
 };
 
 export default Monitor; 
+
+
+export function useClassCounts(detections) {
+  const [classCounts, setClassCounts] = useState({});
+
+  useEffect(() => {
+    if (detections && detections.length > 0) {
+      const counts = detections.reduce((acc, d) => {
+        acc[d.class_name] = (acc[d.class_name] || 0) + 1;
+        return acc;
+      }, {});
+      setClassCounts(counts);
+    } else {
+      setClassCounts({});
+    }
+  }, [detections]);
+
+  return classCounts;
+}
