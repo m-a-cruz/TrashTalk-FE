@@ -86,6 +86,7 @@
     width: 100%;
     max-width: 600px;
     height: 600px;
+    overflow: hidden;
 }
 
 .input-field {
@@ -128,6 +129,9 @@
     text-decoration: none;
     margin: 8px 0 24px;
     transition: opacity 0.2s ease;
+    float: right;
+    width: 50%;
+    box-sizing: border-box;
 }
 
 .forgot-password:hover:not(.disabled) {
@@ -305,14 +309,17 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px;
-  margin: 8px 0;
-  background-color: #fee2e2;
-  border: 1px solid #ef4444;
+  padding: 5px;
+  margin: 0 0 24px;
+  /* background-color: #fee2e2; */
+  /* border: 1px solid #ef4444; */
   border-radius: 8px;
   color: #dc2626;
   font-size: 14px;
   animation: fadeIn 0.3s ease-in-out;
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
 }
 
 .error-message svg {

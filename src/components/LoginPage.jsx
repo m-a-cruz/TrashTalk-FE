@@ -84,7 +84,6 @@ const LoginPage = () => {
         <h2 className="page-title">Log In</h2>
 
         <form onSubmit={handleLogin} className="login-form">
-          <ErrorMessage message={error} />
           
           <input
             type="email"
@@ -132,7 +131,7 @@ const LoginPage = () => {
               )}
             </button>
           </div>
-
+          <ErrorMessage message={error} />
           <a 
             href="#" 
             onClick={(e) => { 
