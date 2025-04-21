@@ -75,7 +75,7 @@ const Dashboard = () => {
             ['chart-1-hourlymonitoring', 'chart-1-totalgaslevel', 'chart-1-weeklytrend']
               .includes(`chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`)
           ).map((chart, index) => (
-            <div
+            <div 
               key={index}
               className={`dashboard-card chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
             >

@@ -7,7 +7,7 @@ import "../assets/styles/Navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  return (
+  return ( 
     <nav className="navbar">
       <div className="navbar-left">
         <div className="logo" onClick={() => navigate("/dashboard")}>
