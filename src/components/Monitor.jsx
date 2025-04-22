@@ -27,7 +27,6 @@ const Monitor = () => {
       setLoading(true); // start loading
       const response = await axios.get(`${API}latest`, { withCredentials: true });
       if (response.status === 200) {
-        console.log(response.data);
         setData(response.data);
         setDetections(response.data.detections);
       }

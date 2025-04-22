@@ -10,7 +10,7 @@ import axios from "axios";
 import "../assets/styles/NotificationIcon.css";
 
 const NotificationIcon = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); 
   const [notifications, setNotifications] = useState([]);
   const notificationRef = useRef(null);
   const API = import.meta.env.VITE_GAS_API_URL;
@@ -150,9 +150,9 @@ const NotificationIcon = () => {
             )}
           </div>
 
-          <div className="dropdown-footer">
+         {/* <div className="dropdown-footer">
             <button className="view-all">View All Notifications</button>
-          </div>
+          </div> */}
         </div>
       )}
 

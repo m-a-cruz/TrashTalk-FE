@@ -28,7 +28,6 @@ const ProfileIcon = () => {
     try {
         await axios.post(`${API}logout`, null, { withCredentials: true });
         navigate("/");
-        console.log("Logout successful");
     } catch (error) {
         console.error("Logout failed:", error);
     }
