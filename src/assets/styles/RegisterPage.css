@@ -206,7 +206,7 @@
     min-height: 100vh;
     width: 50%;
     position: relative;
-    background-image: url('http://localhost:5173/src/assets/images/backgound.png');
+    background-image: url('/backgound.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
