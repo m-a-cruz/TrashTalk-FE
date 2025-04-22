@@ -4,7 +4,7 @@ import NotificationIcon from "./NotificationIcon";
 import ProfileIcon from "./ProfileIcon";
 import "../assets/styles/Navbar.css";
 
-const Navbar = () => {
+const Navbar = () => { 
   const navigate = useNavigate();
 
   return ( 

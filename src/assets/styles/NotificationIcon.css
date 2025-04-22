@@ -1,6 +1,6 @@
 .notification-container {
   position: relative;
-  margin-right: 20px;
+  /* margin-right: 0px; */
 }
 
 .notification-icon {
@@ -57,7 +57,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  width: 350px;
+  width: 500px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);

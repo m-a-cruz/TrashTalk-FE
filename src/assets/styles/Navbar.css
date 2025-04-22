@@ -96,7 +96,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0rem;
 }
 
 .notification-icon,
@@ -107,6 +107,7 @@
   border-radius: 50%;
   transition: all 0.3s ease;
   background: transparent;
+  /* border: 1px dashed red; */
 }
 
 .notification-icon:hover,

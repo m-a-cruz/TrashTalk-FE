@@ -116,7 +116,7 @@ function RegisterPage() {
         <h2 className="page-title">Register</h2>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <ErrorMessage message={error} />
+
 
           <div className="name-fields">
             <input
@@ -233,7 +233,7 @@ function RegisterPage() {
               I agree to the <a href="/terms" className="terms-link">Terms and Conditions</a>
             </label>
           </div>
-
+          <ErrorMessage message={error} />
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? 'Registering...' : 'Register'}
           </button>

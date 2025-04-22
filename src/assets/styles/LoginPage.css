@@ -58,15 +58,17 @@
 
 .login-container {
     flex: 1;
-    max-width: 800px;
-    /* height: 100px; */
-    /* background: #f70000;     */
+    max-width: 700px;
+    height: 100%;
+    background: #f70000;    
     padding: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin: 0 auto;
+    box-sizing: border-box;
+    min-height: 100vh;
 }
 
 .garbage-bag-img {
@@ -84,9 +86,10 @@
 
 .login-form {
     width: 100%;
-    max-width: 600px;
-    height: 600px;
+    max-width: 500px;
+    height: auto;
     overflow: hidden;
+    margin: auto 0;
 }
 
 .input-field {
@@ -102,7 +105,7 @@
     outline: none;
     transition: border-color 0.2s ease;
     box-sizing: border-box;
-    height: 60px;
+    height: 40px; /* edit */
 }
 
 .input-field:disabled {
@@ -198,10 +201,12 @@
 }
 
 .footer {
-    margin-top: 32px;
+    margin-top: auto;
     text-align: center;
     font-family: "Poppins-Regular", Helvetica;
     font-size: 14px;
+    padding-top: 20px;
+    width: 100%;
 }
 
 .footer a {

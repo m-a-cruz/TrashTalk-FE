@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
 import "../assets/styles/Monitor.css";
-import cam from "../assets/images/cam.png";
 import axios from "axios";
 import { useState, useEffect  } from "react";
 
