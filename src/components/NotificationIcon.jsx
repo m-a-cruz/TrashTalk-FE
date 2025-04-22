@@ -22,7 +22,7 @@ const NotificationIcon = () => {
     fetchNotifications();
     const interval = setInterval(() => {
       fetchNotifications();
-    }, 5000);
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -65,6 +65,7 @@ const NotificationIcon = () => {
   }, []);
 
   const markAsRead = (id) => {
+    updateData(id, "Read")
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
   };
 
@@ -75,21 +76,23 @@ const NotificationIcon = () => {
   const deleteNotification = (id) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
-
-  const handleClose = async () => {
+  
+  const updateData = async(id, status) => {
     try {
-      const response = await axios.put(`${API}notification`, {
-        id: alertNotification._id?.$oid,
-        status: "Read"
-      }, { withCredentials: true });
+      const response = await axios.put(`${API}notification`, { id: id, status: status }, { withCredentials: true });
   
       if (response.status === 201) {
-        setShowModal(false);
-        setAlertNotification(null);
-        await fetchNotifications();
+        return true;
       }
     } catch (error) {
       console.log(error.response?.data?.error || error.message);
+    }
+  }
+  const handleClose = async () => {
+    if (updateData(alertNotification._id?.$oid, "Read")) {
+      setShowModal(false);
+      setAlertNotification(null);
+      await fetchNotifications();
     }
   };
 
