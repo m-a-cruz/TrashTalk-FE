@@ -132,11 +132,13 @@ const Insights = () => {
   ];
 
   const API = import.meta.env.VITE_INS_API_URL;
-  const [insight, setInsight] = useState({});
+  const API2 = import.meta.env.VITE_GAS_API_URL;
+  const [charts, setCharts] = useState({});
   const [data, setData] = useState({});
 
   useEffect(() => {
     fetchGasData();
+    fetchChartData();
   }, []);
   
   const fetchGasData = async () => {
@@ -150,6 +152,18 @@ const Insights = () => {
     }
   };
 
+  const fetchChartData = async () => {
+    try {
+      const response = await axios.get(`${API2}charts`, { withCredentials: true });
+      if (response.status === 200) {
+        console.log(response.data?.title);
+        // setCharts(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   return (
     <div className="insights-wrapper">
@@ -161,9 +175,13 @@ const Insights = () => {
         
         <div className="insights-content">
           <div className="chart-section">
-            <div className="chart-card">
-              <Line data={chartData} options={chartOptions} />
-            </div>
+              {/* {charts.filter((chart) => chart.title === 'prediction').map((chart, index) => (
+                <div className="chart-card" key={index}>
+                  <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" 
+                  width="640" height="480" 
+                  src={chart.link}></iframe>
+                </div>
+              ))} */}
           </div>
 
           <div className="status-cards">
