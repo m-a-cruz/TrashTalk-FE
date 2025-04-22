@@ -39,7 +39,7 @@ const Dashboard = () => {
               className="bin-dropdown"
             >
               {[...new Set(charts.map(chart => chart.bin))]
-                .filter(bin => bin) 
+                .filter(bin => bin !== 0) 
                 .map((bin, index) => (
                   <option key={index} value={bin}>Bin {bin}</option>
                 ))

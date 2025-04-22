@@ -14,13 +14,15 @@ const NotificationIcon = () => {
   const [notifications, setNotifications] = useState([]);
   const notificationRef = useRef(null);
   const API = import.meta.env.VITE_GAS_API_URL;
+  const [showModal, setShowModal] = useState(false);
+  const [alertNotification, setAlertNotification] = useState(null); 
 
   useEffect(() => {
 
     fetchNotifications();
     const interval = setInterval(() => {
-      fetchNotifications(); // process -> then fetch
-    }, 1000);
+      fetchNotifications();
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -29,16 +31,28 @@ const NotificationIcon = () => {
     try {
       const response = await axios.get(`${API}notifications`, { withCredentials: true });
       if (response.status === 200) {
-        setNotifications(response.data.map((n) => ({
+        const notificationsData = response.data.map(n => ({
           ...n,
           id: n._id?.$oid || Math.random().toString(),
-          read: false
-        })));
+          read: n.data?.status === "Read"
+        }));
+  
+        setNotifications(notificationsData);
+  
+        const latest = notificationsData[0];
+        if (latest?.data?.type !== "Safe" && latest?.data?.status === "Active") {
+          setAlertNotification(latest);
+          setShowModal(true);
+        } else {
+          setAlertNotification(null);
+          setShowModal(false);
+        }
       }
     } catch (err) {
       console.error("Failed to fetch notifications:", err);
     }
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -62,8 +76,27 @@ const NotificationIcon = () => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 
+  const handleClose = async () => {
+    try {
+      const response = await axios.put(`${API}notification`, {
+        id: alertNotification._id?.$oid,
+        status: "Read"
+      }, { withCredentials: true });
+  
+      if (response.status === 201) {
+        setShowModal(false);
+        setAlertNotification(null);
+        await fetchNotifications();
+      }
+    } catch (error) {
+      console.log(error.response?.data?.error || error.message);
+    }
+  };
+
   const getNotificationIcon = (type) => {
     switch (type?.toLowerCase()) {
+      // Dito Paps, pwede padagdag ng Icons, Kasi apat yung ano ta types of notifications
+      // INFO, WARNING, CRITICAL, EXPLOSIVE
       case 'warning': return <FaExclamationTriangle className="notification-type-icon warning" />;
       case 'success': return <FaCheck className="notification-type-icon success" />;
       case 'info': return <FaInfoCircle className="notification-type-icon info" />;
@@ -119,6 +152,18 @@ const NotificationIcon = () => {
 
           <div className="dropdown-footer">
             <button className="view-all">View All Notifications</button>
+          </div>
+        </div>
+      )}
+
+      {showModal && alertNotification && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h3>⚠️ Alert Notification</h3>
+            <p><strong>Status:</strong> {alertNotification.data?.status}</p>
+            <p><strong>Type:</strong> {alertNotification.data?.type}</p>
+            <p><strong>Message:</strong> {alertNotification.data?.message}</p>
+            <button onClick={handleClose}>Close</button>
           </div>
         </div>
       )}
