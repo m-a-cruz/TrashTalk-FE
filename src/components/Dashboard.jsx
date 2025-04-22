@@ -47,51 +47,30 @@ const Dashboard = () => {
             </select>
           </div>
         </div>
-        
-              <div className="dashboard-grid">
-        
-        {/* Top row: 3 charts side by side */}
-        <div className="dashboard-row-top">
-          {charts.filter(chart =>
-            ['chart-1-avgdaily', 'chart-1-mostactivegas', 'chart-1-percentage']
-              .includes(`chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`)
-          ).map((chart, index) => (
-            <div
-              key={index}
-              className={`dashboard-card chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
-            >
-              <div className="chart-container">
-                <ResponsiveContainer width="100%" height={500}>
-                  <iframe src={chart.link} title={chart.title}></iframe>
-                </ResponsiveContainer>
+  
+        {/* Unified grid for all charts */}
+        <div className="dashboard-grid">
+          {charts.filter(chart => chart.bin === selectedBin).map((chart, index) => {
+            const baseClass = `chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`;
+            
+            return (
+              <div 
+                key={index} 
+                className={`dashboard-card ${baseClass}`}
+              >
+                <div className="chart-container">
+                  <ResponsiveContainer width="100%" height={500}>
+                    <iframe src={chart.link} title={chart.title}></iframe>
+                  </ResponsiveContainer>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-
-        {/* Full width charts */}
-        <div className="dashboard-row-full">
-          {charts.filter(chart =>
-            ['chart-1-hourlymonitoring', 'chart-1-totalgaslevel', 'chart-1-weeklytrend']
-              .includes(`chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`)
-          ).map((chart, index) => (
-            <div 
-              key={index}
-              className={`dashboard-card chart-${chart.bin}-${chart.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')}`}
-            >
-              <div className="chart-container">
-                <ResponsiveContainer width="100%" height={500}>
-                  <iframe src={chart.link} title={chart.title}></iframe>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          ))}
-        </div>
-
-       </div>
       </div>
     </div>
   );
+  
 };
 
 export default Dashboard;

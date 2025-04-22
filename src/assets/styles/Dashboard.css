@@ -88,21 +88,62 @@
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
 } */
 
-.dashboard-grid {
+/* .dashboard-grid {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+} */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 2rem;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.dashboard-row {
+
+/* Specific positions in the grid */
+.chart-1-avgdaily {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.chart-1-hourlymonitoring {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.chart-1-mostactivegas {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.chart-1-totalgaslevel {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.chart-1-percentage {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.chart-1-weeklytrend {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* .dashboard-row {
   display: flex;
   gap: 2rem;
   width: 100%;
   flex-wrap: wrap;
-}
+} */
 
 .dashboard-card {
   background: rgb(255, 255, 255);
@@ -140,7 +181,7 @@
 }
 
 /* Existing row styling for the top three charts (keeps them side-by-side) */
-.dashboard-row-top {
+/* .dashboard-row-top {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -148,34 +189,34 @@
 }
 
 /* New full-width row style */
-.dashboard-row-full {
+/* .dashboard-row-full {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
-}
+}  */
 
 /* Make individual full-width cards stretch the whole row */
-.chart-1-hourlymonitoring,
+/* .chart-1-hourlymonitoring,
 .chart-1-totalgaslevel,
 .chart-1-weeklytrend {
   width: 100%;
 }
 
 /* Chart-specific styles */
-.chart-1-avgdaily,
+/* .chart-1-avgdaily,
 .chart-1-mostactivegas,
 .chart-1-percentage {
   flex: 1;
   min-width: 300px;
-}
+} */
 
-.chart-1-hourlymonitoring,
+/* .chart-1-hourlymonitoring,
 .chart-1-totalgaslevel,
 .chart-1-weeklytrend {
   flex: 1;
   min-width: 400px;
-}
+}  */
 
 .dashboard-card::before {
   content: '';
