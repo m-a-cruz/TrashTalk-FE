@@ -47,20 +47,6 @@ const LoginPage = () => {
     } catch (error) {
       if (error.response) {
         setError(error.response.data.error);
-        // Handle specific error responses from the server
-        // switch (error.response.status) {
-        //   case 401:
-        //     setError("Invalid email or password");
-        //     break;
-        //   case 404:
-        //     setError("Account not found");
-        //     break;
-        //   case 403:
-        //     setError("Account is locked. Please contact support");
-        //     break;
-        //   default:
-        //     setError("An error occurred during login. Please try again");
-        // }
       } else if (error.request) {
         setError("Unable to connect to the server. Please check your internet connection");
       } else {
