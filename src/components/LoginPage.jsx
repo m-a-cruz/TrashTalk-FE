@@ -60,7 +60,7 @@ const LoginPage = () => {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
-        <img src="/background.png" alt="TrashTalk" />
+        <img src="/images/background.png" alt="TrashTalk" />
         <div className="image-content">
 
           {/* <p className="image-text">Smart Waste Management System</p> */}
