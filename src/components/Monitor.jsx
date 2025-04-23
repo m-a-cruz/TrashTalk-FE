@@ -56,7 +56,8 @@ const Monitor = () => {
                       <img
                         src={`data:image/jpeg;base64,${data.image_annotated_base64}`}
                         alt="Detected"
-                        className="bin-image rounded max-w-md mb-4"
+                        className="bin-image rounded"
+                        style={{ width: '350px', height: '400px' }}
                       />
                     )
                   }

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import loadingImage from "../assets/images/catfound.gif";
 import "../assets/styles/Protected.css";
 
 const ProtectedRoute = ({ children }) => {
@@ -29,7 +28,7 @@ const ProtectedRoute = ({ children }) => {
   if (isAuthenticated === null) {
     return (
       <div className="loading-container">
-        <img src={loadingImage} alt="Loading..." className="loading-image" />
+        <img src='/images/catfound.gif' alt="Loading..." className="loading-image" />
         <p className="loading-text">Loading, please wait...</p>
       </div>
     );

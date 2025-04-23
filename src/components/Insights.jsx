@@ -1,82 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import "../assets/styles/Insights.css";
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-} from 'chart.js';
 import axios from "axios";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 const Insights = () => {
-  const chartData = {
-    labels: Array.from({ length: 36 }, (_, i) => i),
-    datasets: [
-      {
-        label: 'Actual Data',
-        data: [100, 118, 95, 70, 55, 52, 50, 52, 60, 110, 108, 92, 90, 115],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.1)',
-        fill: true,
-        tension: 0.4,
-      },
-      {
-        label: 'Predicted Data',
-        data: [100, 118, 96, 72, 57, 54, 51, 53, 62, 112, 110, 95, 92, 118],
-        borderColor: 'rgb(255, 205, 86)',
-        backgroundColor: 'rgba(255, 205, 86, 0.1)',
-        fill: true,
-        tension: 0.4,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Predictive Area Chart'
-      },
-    },
-    scales: {
-      y: {
-        title: {
-          display: true,
-          text: 'Gas Concentration (ppm)'
-        },
-        min: 40,
-        max: 140,
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Time (hours)'
-        }
-      }
-    }
-  };
 
   const statusCards = [
     {
@@ -105,35 +33,9 @@ const Insights = () => {
     }
   ];
 
-  const insights = [
-    {
-      status: 'safe',
-      text: 'Base on current trend, the gas level may exceed safe limits in 3 hours'
-    },
-    {
-      status: 'caution',
-      text: 'Daily average is predicted to rise by 15% tomorrow.'
-    }
-  ];
-
-  const timeData = [
-    {
-      timestamp: '10:00 am',
-      actual: '20 ppm',
-      predicted: '22 ppm',
-      difference: '+2 ppm'
-    },
-    {
-      timestamp: '11:00 am',
-      actual: '23 ppm',
-      predicted: '25 ppm',
-      difference: '+2 ppm'
-    }
-  ];
-
   const API = import.meta.env.VITE_INS_API_URL;
   const API2 = import.meta.env.VITE_GAS_API_URL;
-  const [charts, setCharts] = useState({});
+  const [charts, setCharts] = useState([]);
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -156,8 +58,8 @@ const Insights = () => {
     try {
       const response = await axios.get(`${API2}charts`, { withCredentials: true });
       if (response.status === 200) {
-        console.log(response.data?.title);
-        // setCharts(response.data);
+        // console.log(response.data);
+        setCharts(response.data);
       }
     } catch (error) {
       console.error(error);
@@ -175,13 +77,17 @@ const Insights = () => {
         
         <div className="insights-content">
           <div className="chart-section">
-              {/* {charts.filter((chart) => chart.title === 'prediction').map((chart, index) => (
-                <div className="chart-card" key={index}>
-                  <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" 
-                  width="640" height="480" 
-                  src={chart.link}></iframe>
+            <div className="chart-card">
+              {Array.isArray(charts) && charts.filter((chart) => chart.title === 'prediction').map((chart, index) => (
+                <div className="chart-content" key={index}>
+                  <iframe
+                    height="300"
+                    src={chart.link}
+                    title={chart.title} // Always good to add a title for accessibility
+                ></iframe>
                 </div>
-              ))} */}
+              ))}
+            </div>
           </div>
 
           <div className="status-cards">
@@ -221,26 +127,15 @@ const Insights = () => {
             </div>
 
             <div className="time-data-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Timestamp</th>
-                    <th>Actual</th>
-                    <th>Predicted</th>
-                    <th>Difference</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {timeData.map((row, index) => (
-                    <tr key={index}>
-                      <td>{row.timestamp}</td>
-                      <td>{row.actual}</td>
-                      <td>{row.predicted}</td>
-                      <td>{row.difference}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {Array.isArray(charts) && charts.filter((chart) => chart.title === 'APtable').map((chart, index) => (
+                <div className="chart-content" key={index}>
+                  <iframe
+                    height="300"
+                    src={chart.link}
+                    title={chart.title} // Always good to add a title for accessibility
+                ></iframe>
+                </div>
+              ))}
             </div>
           </div>
         </div>
