@@ -107,6 +107,7 @@ function RegisterPage() {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
+        <img src="src/assets/images/background.png" alt="TrashTalk" />
         <div className="image-content">
 
           {/* <p className="image-text">Smart Waste Management System</p> */}

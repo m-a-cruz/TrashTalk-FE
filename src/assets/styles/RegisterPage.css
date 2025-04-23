@@ -206,11 +206,7 @@
     min-height: 100vh;
     width: 50%;
     position: relative;
-<<<<<<< HEAD
-    background-image: url('public/images/background.png');
-=======
-    background-image: url('/assets/images/background.png');
->>>>>>> 918ebbffc66729b0a1928ef724d8b0e8ea44cc2b
+    /* background-image: url('/images/background.png'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
