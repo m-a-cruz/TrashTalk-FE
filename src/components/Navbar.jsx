@@ -10,7 +10,7 @@ const Navbar = () => {
   return ( 
     <nav className="navbar">
       <div className="navbar-left">
-        <div className="logo" onClick={() => navigate("/dashboard")}>
+        <div className="logo">
           <span className="logo-text">TrashTalk</span>
         </div>
         <div className="nav-links">

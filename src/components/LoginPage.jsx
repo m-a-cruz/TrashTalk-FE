@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/LoginPage.css";
 import ErrorMessage from "./ErrorMessage";
-
+ 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,11 +60,16 @@ const LoginPage = () => {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
-        <img src="/images/background.png" alt="TrashTalk" />
-        <div className="image-content">
-
-          {/* <p className="image-text">Smart Waste Management System</p> */}
-        </div>
+        <img src="/images/background.png" alt="TrashTalk" 
+         style={{
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+          display: "block"
+        }}/>
+        {/* <div className="image-content">
+          <p className="image-text">Smart Waste Management System</p>
+        </div> */}
       </div>
       <div className="login-container">
       <h1 className="app-title">TrashTalk</h1>

@@ -25,15 +25,15 @@
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(76, 175, 80, 0.1);
-  transition: transform 0.3s ease;
+  /* transition: transform 0.3s ease; */
 }
 
-.reports-header:hover {
+/* .reports-header:hover {
   transform: translateY(-2px);
-}
+} */
 
 .reports-title {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
   background: linear-gradient(135deg, #4CAF50, #2E7D32);
   -webkit-background-clip: text;

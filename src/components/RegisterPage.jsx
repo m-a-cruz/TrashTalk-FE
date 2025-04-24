@@ -10,7 +10,7 @@ function RegisterPage() {
     firstname: "",
     lastname: "",
     email: "",
-    accessCode: "",
+    accessCode: "", 
     password: "",
     confirmPassword: "",
     termsAccepted: false
@@ -107,11 +107,16 @@ function RegisterPage() {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
-        <img src="/images/background.png" alt="TrashTalk" />
-        <div className="image-content">
-
-          {/* <p className="image-text">Smart Waste Management System</p> */}
-        </div>
+        <img src="/images/background.png" alt="TrashTalk" 
+         style={{
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+          display: "block"
+        }}/>
+        {/* <div className="image-content">
+          <p className="image-text">Smart Waste Management System</p>
+        </div> */}
       </div>
       <div className="login-container">          <h1 className="app-title">TrashTalk</h1>
         <h2 className="page-title">Register</h2>

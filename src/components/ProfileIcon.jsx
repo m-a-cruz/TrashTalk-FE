@@ -10,6 +10,22 @@ const ProfileIcon = () => {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_AUTH_API_URL;
 
+  const [user, setUser] = useState({ name: "", email: "" });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${API}me`, { withCredentials: true });
+        setUser(response.data);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,8 +62,8 @@ const ProfileIcon = () => {
                 <FaUser />
               </div>
               <div className="user-details">
-                <h4>John Doe</h4>
-                <p>john.doe@example.com</p>
+                <h4>{user.name || "Loading..."}</h4>
+                <p>{user.email || "Loading..."}</p>
               </div>
             </div>
           </div>

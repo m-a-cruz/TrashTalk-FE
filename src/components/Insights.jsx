@@ -81,9 +81,11 @@ const Insights = () => {
               {Array.isArray(charts) && charts.filter((chart) => chart.title === 'prediction').map((chart, index) => (
                 <div className="chart-content" key={index}>
                   <iframe
-                    height="300"
+                    height="400"
+                    width="100%"
                     src={chart.link}
                     title={chart.title} // Always good to add a title for accessibility
+                    style={{ border: 'none' }}
                 ></iframe>
                 </div>
               ))}
@@ -130,9 +132,11 @@ const Insights = () => {
               {Array.isArray(charts) && charts.filter((chart) => chart.title === 'APtable').map((chart, index) => (
                 <div className="chart-content" key={index}>
                   <iframe
-                    height="300"
+                    height="600"
+                    width="100%"
                     src={chart.link}
                     title={chart.title} // Always good to add a title for accessibility
+                    style={{ border: 'none' }}
                 ></iframe>
                 </div>
               ))}

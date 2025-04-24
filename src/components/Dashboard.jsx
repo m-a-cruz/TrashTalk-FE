@@ -4,13 +4,13 @@ import { useState, useEffect  } from "react";
 import Navbar from "./Navbar";
 import "../assets/styles/Dashboard.css";
 import axios from "axios";
-
+ 
 const Dashboard = () => {
   const navigate = useNavigate();
   const API = import.meta.env.VITE_GAS_API_URL;
   const [selectedBin, setSelectedBin] = useState(1);
   const [charts, setCharts] = useState([]);
-
+ 
   const fetchCharts = async () => {
     try {
       const response = await axios.get(`${API}charts`, { withCredentials: true });
@@ -59,7 +59,7 @@ const Dashboard = () => {
                 className={`dashboard-card ${baseClass}`}
               >
                 <div className="chart-container">
-                  <ResponsiveContainer width="100%" height={500}>
+                  <ResponsiveContainer width="100%" height={350}>
                     <iframe src={chart.link} title={chart.title}></iframe>
                   </ResponsiveContainer>
                 </div>
