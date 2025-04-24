@@ -29,7 +29,7 @@ const Dashboard = () => {
       <Navbar />
       <div className="dashboard-container">
         <div className="dashboard-header">
-          <h2 className="dashboard-title">Dashboard</h2>
+          {/* <h2 className="dashboard-title">Dashboard</h2> */}
           <div className="bin-selector">
             <label htmlFor="bin-select">Select Bin:</label>
             <select 

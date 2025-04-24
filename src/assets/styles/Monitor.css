@@ -3,7 +3,7 @@
   width: 100%;
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
   padding: 1rem;
-  padding-top: 80px;
+  padding-top: 50px;
   box-sizing: border-box;
   /* background: #c56c23 */
 }
@@ -70,14 +70,15 @@
 .bin-image-container {
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 450px;
+  /* height: 300px; */
   overflow: hidden;
 }
 
 .bin-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .bin-overlay {
@@ -120,15 +121,27 @@
 }
 
 .detail-label {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   font-weight: 600;
   color: #666;
 }
 
-.detail-value {
-  font-size: 1rem;
+.detail-value{
+  font-size: .8rem;
   color: #333;
 }
+
+.detail-value span {
+  font-size: inherit;
+  color: inherit;
+}
+
+.detail-value p {
+  font-size: inherit;
+  color: inherit;
+  margin: 0;
+}
+
 
 .status-indicator {
   width: 24px;

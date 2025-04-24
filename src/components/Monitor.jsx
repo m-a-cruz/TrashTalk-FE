@@ -40,9 +40,9 @@ const Monitor = () => {
     <div className="monitor-wrapper">
       <Navbar />
       <div className="monitor-container">
-        <div className="monitor-header">
+        {/* <div className="monitor-header">
           <h2 className="monitor-title">Real-time Bin Monitoring</h2>
-        </div>
+        </div> */}
         
         {/* Modify Code if Bin is multiple - Set the bins to the number of bins have*/}
         {bins > 0 && (

@@ -40,9 +40,9 @@ const Reports = () => {
     <div className="reports-wrapper">
       <Navbar />
       <div className="reports-container">
-        <div className="reports-header">
+        {/* <div className="reports-header">
           <h2 className="reports-title">Reports</h2>
-        </div>
+        </div> */}
         
         <div className="reports-actions">
           <button className="generate-report-btn">Generate New Report</button>

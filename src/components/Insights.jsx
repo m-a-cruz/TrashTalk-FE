@@ -61,7 +61,7 @@ const Insights = () => {
         // console.log(response.data);
         setCharts(response.data);
       }
-    } catch (error) {
+    } catch (error) { 
       console.error(error);
     }
   }
@@ -71,9 +71,9 @@ const Insights = () => {
     <div className="insights-wrapper">
       <Navbar />
       <div className="insights-container">
-        <div className="insights-header">
+        {/* <div className="insights-header">
           <h2 className="insights-title">Analytics & Predictions</h2>
-        </div>
+        </div> */}
         
         <div className="insights-content">
           <div className="chart-section">
