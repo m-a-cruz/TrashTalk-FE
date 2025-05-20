@@ -12,18 +12,18 @@ const ProfileIcon = () => {
 
   const [user, setUser] = useState({ name: "", email: "" });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${API}me`, { withCredentials: true });
-        setUser(response.data);
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await axios.get(`${API}`, { withCredentials: true });
+  //       setUser(response.data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch user data:", error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, []);
+  //   fetchUserData();
+  // }, []);
 
 
   // Close dropdown when clicking outside

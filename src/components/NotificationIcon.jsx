@@ -8,88 +8,127 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import "../assets/styles/NotificationIcon.css";
+import socket from "../assets/js/Notifications";
 
 const NotificationIcon = () => {
-  const [isOpen, setIsOpen] = useState(false);  
+  const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const notificationRef = useRef(null);
   const API = import.meta.env.VITE_GAS_API_URL;
   const [showModal, setShowModal] = useState(false);
-  const [alertNotification, setAlertNotification] = useState(null); 
+  const [alertNotification, setAlertNotification] = useState(null);
 
+  // Fetch and listen to new notifications
   useEffect(() => {
-
     fetchNotifications();
-    const interval = setInterval(() => {
-      fetchNotifications();
-    }, 30000);
-    return () => clearInterval(interval);
+
+    socket.on("notifications", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+
+    socket.on("new_notification", (data) => {
+      setNotifications((prev) => [data, ...prev]);
+      if (data.data?.status === "Active" && data.data?.type !== "Safe") {
+        setAlertNotification(data);
+        setShowModal(true);
+      }
+    });
+
+    socket.on("updated_notification", (data) => {
+      setNotifications((prev) =>
+        prev.map((n) => n._id?.$oid === data._id?.$oid ? { ...n, ...data } : n )
+      );
+    });
+
+    return () => {
+      socket.off("notification");
+      socket.off("new_notification");
+      socket.off("updated_notification");
+    };
   }, []);
 
-  
+  // Fetch notifications from backend
   const fetchNotifications = async () => {
     try {
-      const response = await axios.get(`${API}notifications`, { withCredentials: true });
+      const response = await axios.get(`${API}notifications`, {
+        withCredentials: true
+      });
       if (response.status === 200) {
-        const notificationsData = response.data.map(n => ({
-          ...n,
-          id: n._id?.$oid || Math.random().toString(),
-          read: n.data?.status === "Read"
-        }));
-  
-        setNotifications(notificationsData);
-  
-        const latest = notificationsData[0];
-        if (latest?.data?.type !== "Safe" && latest?.data?.status === "Active") {
-          setAlertNotification(latest);
-          setShowModal(true);
-        } else {
-          setAlertNotification(null);
-          setShowModal(false);
-        }
+        setNotifications(
+          response.data
+            .filter((n) => n.data?.status !== "Deleted")
+            .map((n) => ({
+              ...n,
+              id: n._id?.$oid
+            }))
+        );
       }
     } catch (err) {
       console.error("Failed to fetch notifications:", err);
     }
   };
-  
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const markAsRead = (id) => {
-    updateData(id, "Read")
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+  // Mark single notification as read
+  const markAsRead = async (id) => {
+    const success = await updateData(id, "Read");
+    if (success) {
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === id ? { ...n, data: { ...n.data, status: "Read" } } : n))
+      );
+    }
   };
 
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  // Mark all as read
+  const markAllAsRead = async () => {
+    const promises = notifications.map((n) =>
+      n.data?.status === "Active" ? updateData(n.id, "Read") : null
+    );
+    await Promise.all(promises);
+    await fetchNotifications();
   };
 
-  const deleteNotification = (id) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
+  // Delete a notification
+  const deleteNotification = async (id) => {
+    const success = await updateData(id, "Deleted");
+    if (success) {
+      setNotifications((prev) => prev.filter((n) => n.id !== id));
+    }
   };
-  
-  const updateData = async(id, status) => {
+
+  // Reusable status updater
+  const updateData = async (id, status) => {
     try {
-      const response = await axios.put(`${API}notification`, { id: id, status: status }, { withCredentials: true });
-  
-      if (response.status === 201) {
-        return true;
-      }
+      const response = await axios.put(
+        `${API}notification`,
+        { id, status },
+        { withCredentials: true }
+      );
+      return response.status === 201;
     } catch (error) {
       console.log(error.response?.data?.error || error.message);
+      return false;
     }
-  }
+  };
+
+  // Close modal for alert notification
   const handleClose = async () => {
-    if (updateData(alertNotification._id?.$oid, "Read")) {
+    const success = await updateData(alertNotification._id?.$oid, "Read");
+    if (success) {
       setShowModal(false);
       setAlertNotification(null);
       await fetchNotifications();
@@ -98,20 +137,22 @@ const NotificationIcon = () => {
 
   const getNotificationIcon = (type) => {
     switch (type?.toLowerCase()) {
-      // Dito Paps, pwede padagdag ng Icons, Kasi apat yung ano ta types of notifications
-      // INFO, WARNING, CRITICAL, EXPLOSIVE
-      case 'warning': return <FaExclamationTriangle className="notification-type-icon warning" />;
-      case 'success': return <FaCheck className="notification-type-icon success" />;
-      case 'info': return <FaInfoCircle className="notification-type-icon info" />;
-      default: return <FaInfoCircle className="notification-type-icon" />;
+      case "warning":
+        return <FaExclamationTriangle className="notification-type-icon warning" />;
+      case "success":
+        return <FaCheck className="notification-type-icon success" />;
+      case "info":
+        return <FaInfoCircle className="notification-type-icon info" />;
+      default:
+        return <FaInfoCircle className="notification-type-icon" />;
     }
   };
 
-  const unreadCount = notifications.filter(n => n.data?.status === 'Active').length;
+  const unreadCount = notifications.filter((n) => n.data?.status === "Active").length;
 
   return (
     <div className="notification-container" ref={notificationRef}>
-      <div className="notification-icon" onClick={() => setIsOpen(prev => !prev)}>
+      <div className="notification-icon" onClick={() => setIsOpen((prev) => !prev)}>
         <FaBell />
         {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
       </div>
@@ -121,27 +162,42 @@ const NotificationIcon = () => {
           <div className="dropdown-header">
             <h3>Notifications</h3>
             {unreadCount > 0 && (
-              <button className="mark-all-read" onClick={markAllAsRead}>Mark all as read</button>
+              <button className="mark-all-read" onClick={markAllAsRead}>
+                Mark all as read
+              </button>
             )}
           </div>
 
           <div className="notification-list">
             {notifications.length > 0 ? (
               notifications.map((n) => (
-                <div key={n.id} className={`notification-item ${n.data?.status === 'Active' ? 'read' : 'unread'}`}>
+                <div
+                  key={n.id}
+                  className={`notification-item ${
+                    n.data?.status === "Active" ? "unread" : "read"
+                  }`}
+                >
                   <div className="notification-content">
-                    <div className="notification-icon-wrapper">{getNotificationIcon(n.data?.type)}</div>
+                    <div className="notification-icon-wrapper">
+                      {getNotificationIcon(n.data?.type)}
+                    </div>
                     <div className="notification-details">
                       <h4 className="notification-title">{n.data?.type}</h4>
                       <p className="notification-message">{n.data?.message}</p>
-                      <span className="notification-time">{new Date(n.timestamp?.$date).toLocaleString()}</span>
+                      <span className="notification-time">
+                        {new Date(n.timestamp?.$date || Date.now()).toLocaleString()}
+                      </span>
                     </div>
                   </div>
                   <div className="notification-actions">
-                    {n.data?.status === 'Active' && (
-                      <button className="mark-read-btn" onClick={() => markAsRead(n.id)}><FaCheck /></button>
+                    {n.data?.status === "Active" && (
+                      <button className="mark-read-btn" onClick={() => markAsRead(n.id)}>
+                        <FaCheck />
+                      </button>
                     )}
-                    <button className="delete-btn" onClick={() => deleteNotification(n.id)}><FaTrash /></button>
+                    <button className="delete-btn" onClick={() => deleteNotification(n.id)}>
+                      <FaTrash />
+                    </button>
                   </div>
                 </div>
               ))
@@ -152,10 +208,6 @@ const NotificationIcon = () => {
               </div>
             )}
           </div>
-
-         {/* <div className="dropdown-footer">
-            <button className="view-all">View All Notifications</button>
-          </div> */}
         </div>
       )}
 
@@ -163,9 +215,15 @@ const NotificationIcon = () => {
         <div className="modal-overlay">
           <div className="modal-box">
             <h3>⚠️ Alert Notification</h3>
-            <p><strong>Status:</strong> {alertNotification.data?.status}</p>
-            <p><strong>Type:</strong> {alertNotification.data?.type}</p>
-            <p><strong>Message:</strong> {alertNotification.data?.message}</p>
+            <p>
+              <strong>Status:</strong> {alertNotification.data?.status}
+            </p>
+            <p>
+              <strong>Type:</strong> {alertNotification.data?.type}
+            </p>
+            <p>
+              <strong>Message:</strong> {alertNotification.data?.message}
+            </p>
             <button onClick={handleClose}>Close</button>
           </div>
         </div>
