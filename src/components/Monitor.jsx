@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import "../assets/styles/Monitor.css";
 import axios from "axios";
 import { useState, useEffect  } from "react";
+import socket from "../assets/js/Monitor";
 
 const Monitor = () => {
   const API = import.meta.env.VITE_CAM_API_URL;
@@ -14,27 +15,36 @@ const Monitor = () => {
 
 
   useEffect(() => {
-    fetchData(); // initial trigger on mount
-    const interval = setInterval(() => {
-      fetchData(); // process -> then fetch
-    }, 5000);
-    return () => clearInterval(interval);
+    // fetchData(); // initial trigger on mount
+    // const interval = setInterval(() => {
+    //   fetchData(); // process -> then fetch
+    // }, 5000);
+    // return () => clearInterval(interval);
+
+    socket.on("new_data", (data) => {
+      console.log("Image processed data:", data);
+      // setData(data);
+      // setDetections(data.detections);
+    });
+    return () => {
+      socket.off("image_processed");
+    }
   }, []);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true); // start loading
-      const response = await axios.get(`${API}latest`, { withCredentials: true });
-      if (response.status === 200) {
-        setData(response.data);
-        setDetections(response.data.detections);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false); // stop loading
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     setLoading(true); // start loading
+  //     const response = await axios.get(`${API}latest`, { withCredentials: true });
+  //     if (response.status === 200) {
+  //       setData(response.data);
+  //       setDetections(response.data.detections);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   } finally {
+  //     setLoading(false); // stop loading
+  //   }
+  // };
  
   return (
     <div className="monitor-wrapper">

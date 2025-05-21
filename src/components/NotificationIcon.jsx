@@ -3,6 +3,7 @@ import {
   FaBell,
   FaCheck,
   FaExclamationTriangle,
+  FaExclamationCircle,
   FaInfoCircle,
   FaTrash
 } from "react-icons/fa";
@@ -22,9 +23,10 @@ const NotificationIcon = () => {
   useEffect(() => {
     fetchNotifications();
 
-    socket.on("notifications", (data) => {
-      setNotifications((prev) => [...prev, data]);
-    });
+    // socket.on("notifications", (data) => {
+    //   // setNotifications((prev) => [...prev, data]);
+    //   setNotifications(data);
+    // });
 
     socket.on("new_notification", (data) => {
       setNotifications((prev) => [data, ...prev]);
@@ -137,9 +139,13 @@ const NotificationIcon = () => {
 
   const getNotificationIcon = (type) => {
     switch (type?.toLowerCase()) {
+      case "explosive":
+        return <FaExclamationCircle className="notification-type-icon" color="d9534f" />;
+      case "critical":
+        return <FaExclamationTriangle className="notification-type-icon" color="f0ad4e"/>;
       case "warning":
-        return <FaExclamationTriangle className="notification-type-icon warning" />;
-      case "success":
+        return <FaExclamationTriangle className="notification-type-icon" color="ffd500"/>;
+      case "safe":
         return <FaCheck className="notification-type-icon success" />;
       case "info":
         return <FaInfoCircle className="notification-type-icon info" />;
