@@ -23,10 +23,10 @@ const NotificationIcon = () => {
   useEffect(() => {
     fetchNotifications();
 
-    socket.on("notifications", (data) => {
-      setNotifications((prev) => [...prev, data]);
-      // setNotifications(data);
-    });
+    // socket.on("notifications", (data) => {
+    //   setNotifications((prev) => [...prev, data]);
+    //   // setNotifications(data);
+    // });
 
     socket.on("new_notification", (data) => {
       setNotifications((prev) => [data, ...prev]);
