@@ -60,10 +60,10 @@ const LoginPage = () => {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
-        <img src="/images/background.png" alt="TrashTalk" 
+        <img src="/images/loginbg.png" alt="TrashTalk" 
          style={{
-          width: "100%",
-          height: "100vh",
+          width: "50%",
+          height: "50vh",
           objectFit: "cover",
           display: "block"
         }}/>
@@ -72,7 +72,13 @@ const LoginPage = () => {
         </div> */}
       </div>
       <div className="login-container">
-      <h1 className="app-title">TrashTalk</h1>
+      {/* <h1 className="app-title">TrashTalk</h1> */}
+      <img 
+  src="/images/TrashTalk.png" 
+  alt="TrashTalk Logo" 
+  className="appititle"
+/>
+
         <h2 className="page-title">Log In</h2>
 
         <form onSubmit={handleLogin} className="login-form">
@@ -154,10 +160,29 @@ const LoginPage = () => {
           </div>
         </form>
 
-        <div className="footer">
-          <a href="/terms">Terms and Conditions</a>
-          <a href="/privacy">Privacy and Policy</a>
-        </div>
+    <div className="footer">
+  <a 
+    href="#" 
+    onClick={(e) => { 
+      e.preventDefault(); 
+      if (!isLoading) navigate("/terms-and-conditions"); 
+    }}
+    className={isLoading ? "disabled" : ""}
+  >
+    Terms and Conditions
+  </a>
+  <a 
+    href="#" 
+    onClick={(e) => { 
+      e.preventDefault(); 
+      if (!isLoading) navigate("/privacy-policy"); 
+    }}
+    className={isLoading ? "disabled" : ""}
+  >
+    Privacy Policy
+  </a>
+</div>
+
       </div>
     </div>
   );

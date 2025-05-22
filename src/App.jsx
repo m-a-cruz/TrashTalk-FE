@@ -37,6 +37,8 @@ function App() {
         <Route path="/accountsettings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
         <Route path="/reportaproblem" element={<PrivateRoute><ReportAProblem /></PrivateRoute>} />
         <Route path="/helppage" element={<PrivateRoute><HelpPage /></PrivateRoute>} />
+        <Route path="terms-and-conditions" element={<PrivateRoute><TermsConditionPage /></PrivateRoute>} />
+        <Route path="privacy-policy" element={<PrivateRoute><PrivacyPolicyPage /></PrivateRoute>} />
 
         {/* Default Route */}
         <Route path="/" element={<LoginPage />} />

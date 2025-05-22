@@ -15,18 +15,23 @@
 }
 
 .navbar-left {
-  display: flex;
-  align-items: center;
   flex: 1;
+  display: flex-start;
+  align-items: center;
+  justify-content: flex-start;
 }
+
 
 .logo {
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
+  margin-right: 1rem;
   border-radius: 8px;
 }
+
 
 .logo-image {
   height: 150px;
