@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FaUser, FaCog, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaUser, FaCog, FaQuestionCircle, FaSignOutAlt,FaExclamationTriangle,} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/ProfileIcon.css";
 import axios from "axios";
@@ -69,18 +69,19 @@ const ProfileIcon = () => {
           </div>
           
           <div className="dropdown-menu">
-            <button className="dropdown-item" onClick={() => navigate("/profile")}>
-              <FaUser className="dropdown-icon" />
-              <span>My Profile</span>
+            <button className="dropdown-item" onClick={() => navigate("/accountsettings")}>
+           <FaCog className="dropdown-icon" />
+              <span>Account Settings</span>
             </button>
-            <button className="dropdown-item" onClick={() => navigate("/settings")}>
-              <FaCog className="dropdown-icon" />
-              <span>Settings</span>
-            </button>
-            <button className="dropdown-item" onClick={() => navigate("/help")}>
+           
+            <button className="dropdown-item" onClick={() => navigate("/helppage")}>
               <FaQuestionCircle className="dropdown-icon" />
               <span>Help & Support</span>
-            </button>
+               </button>
+              <button className="dropdown-item" onClick={() => navigate("/reportaproblem")}>
+              <FaExclamationTriangle className ="dropdown-icon" />
+              <span> Report a Problem </span>
+           </button>
             <div className="dropdown-divider"></div>
             <button className="dropdown-item logout" onClick={handleLogout}>
               <FaSignOutAlt className="dropdown-icon" />

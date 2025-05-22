@@ -11,6 +11,9 @@ import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import SetNewPasswordPage from "./components/SetNewPasswordPage";
 import TermsConditionPage from "./components/TermsConditionPage";
 import PrivacyPolicyPage from "./components/PrivacyPolicyPage";
+import AccountSettings from "./components/AccountSettings";
+import ReportAProblem from "./components/ReportAProblem";
+import HelpPage from "./components/HelpPage";
 import "./App.css";
 
 function App() {
@@ -31,6 +34,9 @@ function App() {
         <Route path="/monitor" element={<PrivateRoute><Monitor /></PrivateRoute>} />
         <Route path="/insights" element={<PrivateRoute><Insights /></PrivateRoute>} />
         <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
+        <Route path="/accountsettings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
+        <Route path="/reportaproblem" element={<PrivateRoute><ReportAProblem /></PrivateRoute>} />
+        <Route path="/helppage" element={<PrivateRoute><HelpPage /></PrivateRoute>} />
 
         {/* Default Route */}
         <Route path="/" element={<LoginPage />} />

@@ -11,7 +11,8 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-left">
         <div className="logo">
-          <span className="logo-text">TrashTalk</span>
+        <img src="/images/BINLOGO1.png" alt="Logo" className="logo-image" />
+          <span className="logo-text"></span>
         </div>
         <div className="nav-links">
           <button onClick={() => navigate("/dashboard")}>Dashboard</button>
