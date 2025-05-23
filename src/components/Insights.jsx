@@ -5,34 +5,6 @@ import axios from "axios";
 
 
 const Insights = () => {
-
-  const statusCards = [
-    {
-      title: 'Current Gas Level',
-      value: '100 ppm',
-      change: '+ 2.5%',
-      color: '#00bcd4'
-    },
-    {
-      title: 'Predicted (1h)',
-      value: '115 ppm',
-      change: '+ 15%',
-      color: '#ce93d8'
-    },
-    {
-      title: 'Predicted (24h)',
-      value: '150 ppm',
-      change: '+ 50%',
-      color: '#f48fb1'
-    },
-    {
-      title: 'Threshold Alert',
-      value: '10 ppm',
-      status: 'Safe Zone',
-      color: '#9fa8da'
-    }
-  ];
-
   const API = import.meta.env.VITE_INS_API_URL;
   const API2 = import.meta.env.VITE_GAS_API_URL;
   const [charts, setCharts] = useState([]);
@@ -90,25 +62,6 @@ const Insights = () => {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="status-cards">
-            {statusCards.map((card, index) => (
-              <div 
-                key={index} 
-                className="status-card"
-                style={{ backgroundColor: card.color }}
-              >
-                <h3 className="status-card-title">{card.title}</h3>
-                <div className="status-card-value">{card.value}</div>
-                {card.change && (
-                  <div className="status-card-change">{card.change}</div>
-                )}
-                {card.status && (
-                  <div className="status-card-status">{card.status}</div>
-                )}
-              </div>
-            ))}
           </div>
 
           <div className="insights-details">

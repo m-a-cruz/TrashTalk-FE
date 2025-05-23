@@ -22,34 +22,6 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   const validateForm = () => {
-    if (!formData.firstname.trim()) {
-      setError("First name is required");
-      return false;
-    }
-    if (!formData.lastname.trim()) {
-      setError("Last name is required");
-      return false;
-    }
-    if (!formData.email.trim()) {
-      setError("Email is required");
-      return false;
-    }
-    if (!formData.email.includes("@")) {
-      setError("Please enter a valid email address");
-      return false;
-    }
-    if (!formData.accessCode.trim()) {
-      setError("Access code is required");
-      return false;
-    }
-    if (formData.password.length < 8) {
-      setError("Password must be at least 8 characters long");
-      return false;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
-      return false;
-    }
     if (!formData.termsAccepted) {
       setError("Please accept the terms and conditions");
       return false;
@@ -66,34 +38,25 @@ function RegisterPage() {
     }
 
     setIsLoading(true);
-    const { firstname, lastname, termsAccepted, confirmPassword, ...filteredFormData } = formData;
+    const { firstname, lastname, termsAccepted, ...filteredFormData } = formData;
     const name = `${firstname} ${lastname}`;
     const dataToSubmit = { ...filteredFormData, name };
+
+    console.log(dataToSubmit);
 
     try {
       const response = await axios.post(`${API}register`, dataToSubmit, {
         headers: { "Content-Type": "application/json" },
       });
       if (response && response.status === 200) {
+        setError("");
+        setFormData({});
         navigate("/login");
       }
     } catch (error) {
       if (error.response) {
-        switch (error.response.status) {
-          case 409:
-            setError("Email already registered");
-            break;
-          case 400:
-            setError("Invalid access code");
-            break;
-          default:
-            setError("Registration failed. Please try again");
-        }
-      } else if (error.request) {
-        setError("Unable to connect to the server. Please check your internet connection");
-      } else {
-        setError("An unexpected error occurred. Please try again");
-      }
+        setError(error.response.data.error || "Registration failed. Please try again");
+      } 
     } finally {
       setIsLoading(false);
     }
@@ -125,11 +88,7 @@ function RegisterPage() {
   className="appititle"
 />
         <h2 className="page-title">Register</h2>
-        
-
         <form onSubmit={handleSubmit} className="login-form">
-
-
           <div className="name-fields">
             <input
               type="text"

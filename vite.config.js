@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/socket.io': {
-        target: `${process.env.VITE_SOCKET_URL}`,
+        target: `${process.env.VITE_SOCKET_URL}` || `${process.env.VITE_SOCKET_URL2}`,
         ws: true,
         changeOrigin: true
       }

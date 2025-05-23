@@ -6,24 +6,26 @@ import axios from "axios";
 
 const ProfileIcon = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState("");
   const profileRef = useRef(null);
   const navigate = useNavigate();
-  const API = import.meta.env.VITE_AUTH_API_URL;
+  const API = import.meta.env.VITE_USER_API_URL;
+  const LOGOUT = import.meta.env.VITE_AUTH_API_URL;
+  const [user, setUser] = useState({ });
 
-  const [user, setUser] = useState({ name: "", email: "" });
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${API}user`, { withCredentials: true });
+        setUser(response.data);
+      } catch (error) {
+        setError(error.response.data.error || "Failed to fetch user data:");
+        console.error("Failed to fetch user data:", error);
+      }
+    };
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await axios.get(`${API}`, { withCredentials: true });
-  //       setUser(response.data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
+    fetchUserData();
+  }, []);
 
 
   // Close dropdown when clicking outside
@@ -42,7 +44,7 @@ const ProfileIcon = () => {
 
   const handleLogout = async () => {
     try {
-        await axios.post(`${API}logout`, null, { withCredentials: true });
+        await axios.post(`${LOGOUT}logout`, null, { withCredentials: true });
         navigate("/");
     } catch (error) {
         console.error("Logout failed:", error);

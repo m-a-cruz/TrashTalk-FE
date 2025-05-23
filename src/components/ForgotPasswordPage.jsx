@@ -2,23 +2,33 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/ForgotPasswordPage.css";
+import ErrorMessage from "./ErrorMessage";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [modalStep, setModalStep] = useState(1);
+  const [form, setForm] = useState({ });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const API = import.meta.env.VITE_AUTH_API_URL;
 
   const handleSubmitEmail = async (e) => {
     e.preventDefault();
+    setForm({ ...form, email: email });
+    setIsLoading(true);
+
+    console.log(email);
     try {
       const response = await axios.post(`${API}forgot`, { email }, {
         headers: { "Content-Type": "application/json" },
       });
       if (response && response.status === 200) {
+        setError("");
         setModalStep(2);
       }
     } catch (error) {
+      setError(error.response.data.error);
       console.error("Error sending reset code:", error);
     }
   };
@@ -26,17 +36,18 @@ const ForgotPasswordPage = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API}forgot-reset`, {
-        code: e.target.code.value,
-        newPassword: e.target.newPassword.value,
-        confirmPassword: e.target.confirmPassword.value
-      }, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.post(`${API}forgot-reset`, { 
+        email: form.email,
+        code: form.code,
+        newPassword: form.newPassword,
+        confirmPassword: form.confirmPassword
+       });
       if (response && response.status === 200) {
+        setError("");
         setModalStep(3);
       }
     } catch (error) {
+      setError(error.response.data.error);
       console.error("Error resetting password:", error);
     }
   };
@@ -69,6 +80,7 @@ const ForgotPasswordPage = () => {
                 onChange={(e) => setEmail(e.target.value)} 
                 required 
               />
+              <ErrorMessage message={error} />
 
               <button type="submit" className="submit-button">
                 Submit
@@ -94,6 +106,8 @@ const ForgotPasswordPage = () => {
               name="code"
               className="input-field"
               placeholder="Enter Code"
+              value={form.code}
+              onChange={(e) => setForm({ ...form, code: e.target.value })}
               required
             />
 
@@ -102,6 +116,8 @@ const ForgotPasswordPage = () => {
               name="newPassword"
               className="input-field"
               placeholder="New Password"
+              value={form.newPassword}
+              onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
               required
             />
 
@@ -110,6 +126,8 @@ const ForgotPasswordPage = () => {
               name="confirmPassword"
               className="input-field"
               placeholder="Confirm Password"
+              value={form.confirmPassword}
+              onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
               required
             />
 
