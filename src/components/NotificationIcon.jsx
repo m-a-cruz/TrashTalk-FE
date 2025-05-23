@@ -18,32 +18,27 @@ const NotificationIcon = () => {
   const API = import.meta.env.VITE_GAS_API_URL;
   const [showModal, setShowModal] = useState(false);
   const [alertNotification, setAlertNotification] = useState(null);
-
   // Fetch and listen to new notifications
   useEffect(() => {
     fetchNotifications();
 
-    // socket.on("notifications", (data) => {
-    //   setNotifications((prev) => [...prev, data]);
-    //   // setNotifications(data);
-    // });
-
     socket.on("new_notification", (data) => {
+      console.log(data)
       setNotifications((prev) => [data, ...prev]);
       if (data.data?.status === "Active" && data.data?.type !== "Safe") {
-        setAlertNotification(data);
+        setAlertNotification((data));
         setShowModal(true);
       }
+      console.log("Alert Notification:", data);
     });
-
     socket.on("updated_notification", (data) => {
       setNotifications((prev) =>
-        prev.map((n) => n._id?.$oid === data._id?.$oid ? { ...n, ...data } : n )
+        prev.map((n) => (n._id?.$oid === data._id?.$oid ? { ...n, ...data } : n))
       );
+      console.log(socket.id)
     });
 
     return () => {
-      socket.off("notification");
       socket.off("new_notification");
       socket.off("updated_notification");
     };

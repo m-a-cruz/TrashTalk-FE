@@ -2,10 +2,14 @@ import { io } from "socket.io-client";
 
 const API = import.meta.env.VITE_SOCKET_URL;
 const socket = io(API, {
-  transports: ["websocket"],
-//   autoConnect: false,
+  path: "socket.io",
+  transports: ["websocket"], // Force only websocket
   withCredentials: true,
+  autoConnect: true,
+  reconnection: true,
 });
+
+console.log("Socket connected:", socket.connected);
 
 export default socket;
 

@@ -15,36 +15,33 @@ const Monitor = () => {
 
 
   useEffect(() => {
-    // fetchData(); // initial trigger on mount
-    // const interval = setInterval(() => {
-    //   fetchData(); // process -> then fetch
-    // }, 5000);
-    // return () => clearInterval(interval);
-
-    socket.on("new_data", (data) => {
+    fetchData();
+    socket.on("processed_image", (data) => {
       console.log("Image processed data:", data);
-      // setData(data);
-      // setDetections(data.detections);
+      // setData((prev) => [data, ...prev]);
+      // setDetections((prev) => [data.detections, ...prev]);
     });
+
+    
     return () => {
       socket.off("image_processed");
     }
   }, []);
 
-  // const fetchData = async () => {
-  //   try {
-  //     setLoading(true); // start loading
-  //     const response = await axios.get(`${API}latest`, { withCredentials: true });
-  //     if (response.status === 200) {
-  //       setData(response.data);
-  //       setDetections(response.data.detections);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   } finally {
-  //     setLoading(false); // stop loading
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      setLoading(true); // start loading
+      const response = await axios.get(`${API}latest`, { withCredentials: true });
+      if (response.status === 200) {
+        setData(response.data);
+        setDetections(response.data.detections);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // stop loading
+    }
+  };
  
   return (
     <div className="monitor-wrapper">
