@@ -107,10 +107,10 @@ function RegisterPage() {
   return (
     <div className="LOGIN-TRASHTALK">
       <div className="image-section">
-        <img src="/images/background.png" alt="TrashTalk" 
+        <img src="/images/loginbg.png" alt="TrashTalk" 
          style={{
-          width: "100%",
-          height: "100vh",
+          width: "50%",
+          height: "50vh",
           objectFit: "cover",
           display: "block"
         }}/>
@@ -118,8 +118,14 @@ function RegisterPage() {
           <p className="image-text">Smart Waste Management System</p>
         </div> */}
       </div>
-      <div className="login-container">          <h1 className="app-title">TrashTalk</h1>
+      <div className="login-container">          
+      <img 
+  src="/images/TrashTalk.png" 
+  alt="TrashTalk Logo" 
+  className="appititle"
+/>
         <h2 className="page-title">Register</h2>
+        
 
         <form onSubmit={handleSubmit} className="login-form">
 
@@ -236,7 +242,14 @@ function RegisterPage() {
                 required
                 disabled={isLoading}
               />
-              I agree to the <a href="/terms" className="terms-link">Terms and Conditions</a>
+              I agree to the <a 
+                href="#" 
+                onClick={(e) => { 
+                  e.preventDefault(); 
+                  if (!isLoading) navigate("/terms-and-conditions"); 
+                }}
+                className={isLoading ? "disabled" : ""}
+              >Terms and Conditions</a>
             </label>
           </div>
           <ErrorMessage message={error} />
@@ -260,12 +273,32 @@ function RegisterPage() {
         </form>
 
         <div className="footer">
-          <a href="/terms">Terms and Conditions</a>
-          <a href="/privacy">Privacy and Policy</a>
-        </div>
+  <a 
+    href="#" 
+    onClick={(e) => { 
+      e.preventDefault(); 
+      if (!isLoading) navigate("/terms-and-conditions"); 
+    }}
+    className={isLoading ? "disabled" : ""}
+  >
+    Terms and Conditions
+  </a>
+  <a 
+    href="#" 
+    onClick={(e) => { 
+      e.preventDefault(); 
+      if (!isLoading) navigate("/privacy-policy"); 
+    }}
+    className={isLoading ? "disabled" : ""}
+  >
+    Privacy Policy
+  </a>
+</div>
+
       </div>
     </div>
   );
-}
+};
+
 
 export default RegisterPage;

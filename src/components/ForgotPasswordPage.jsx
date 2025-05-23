@@ -43,7 +43,14 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="FORGOT-PASSWORD">
+      <div className="logo-container">
+        <img 
+          src="/images/TrashTalk.png" 
+          alt="TrashTalk Logo" 
+        />
+      </div>
       <div className="forgot-password-container">
+        
         {/* <h1 className="app-title">TrashTalk</h1> */}
         <p className="page-title">Forgot Password?</p>
 
@@ -132,8 +139,24 @@ const ForgotPasswordPage = () => {
         )}
 
         <div className="footer">
-          <a href="/terms">Terms and Conditions</a>
-          <a href="/privacy">Privacy and Policy</a>
+          <a 
+            href="#"
+            onClick={(e) => { 
+              e.preventDefault(); 
+              navigate("/terms-and-conditions"); 
+            }}
+          >
+            Terms and Conditions
+          </a>
+          <a 
+            href="#"
+            onClick={(e) => { 
+              e.preventDefault(); 
+              navigate("/privacy-policy"); 
+            }}
+          >
+            Privacy Policy
+          </a>
         </div>
       </div>
     </div>
