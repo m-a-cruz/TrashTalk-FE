@@ -1,127 +1,108 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../assets/styles/SetNewPasswordPage.css";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const SetNewPassword = () => {
-  const [formData, setFormData] = useState({
-    code: "",
-    newPassword: "",
-    confirmPassword: ""
-  });
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const SetNewPasswordPage = () => {
   const navigate = useNavigate();
-  const API = import.meta.env.VITE_AUTH_API_URL;
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isPasswordReset, setIsPasswordReset] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${API}forgot-reset`, formData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response && response.status === 200) {
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("Error resetting password:", error);
-    }
+  const handleSubmit = () => {
+    setIsPasswordReset(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 3000); 
   };
 
-  const handleResendCode = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${API}forgot`, { email: localStorage.getItem('resetEmail') }, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response && response.status === 200) {
-        console.log("Code resent successfully");
-      }
-    } catch (error) {
-      console.error("Error resending code:", error);
-    }
-  };
+  // SVG eye icons
+  const EyeIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+  );
+
+  const EyeOffIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+      <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 8 11 8a13.16 13.16 0 0 1-1.67 2.68"/>
+      <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8a9.74 9.74 0 0 0 5-1.28"/>
+      <line x1="2" y1="2" x2="22" y2="22"/>
+    </svg>
+  );
 
   return (
-    <div className="set-new-password">
-      <div className="reset-password-container">
-        <p className="page-title">Set new password</p>
-        <p className="subtitle">
-          An authentication code has been sent to your email.
-        </p>
+    <div className="setnew-container">
+      <div className="setnew-left-section">
+        <div className="setnew-form-container">
+          {/* Logo */}
+          <div className="setnew-logo">
+            <img src="/images/BINLOGO.png" className="setnew-logo-img" alt="Bin Logo" />
+            <span className="setnew-logo-text">Bin There,<br />Done That!</span>
+          </div>
 
-        <form onSubmit={handleSubmit} className="reset-password-form">
-          <input
-            type="text"
-            className="input-field"
-            placeholder="Code"
-            value={formData.code}
-            onChange={(e) => setFormData({ ...formData, code: e.target.value })}
-            required
-          />
-
-          <div className="password-fields">
-            <div className="password-input-container">
-              <input
-                type={showNewPassword ? "text" : "password"}
-                className="input-field"
-                placeholder="New Password"
-                value={formData.newPassword}
-                onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-                required
-              />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={() => setShowNewPassword(!showNewPassword)}
-              >
-                {showNewPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
+          {isPasswordReset ? (
+            <div className="setnew-success-message">
+              <h2 className="setnew-success-title">Your password has been reset!</h2>
+              <p className="setnew-success-subtitle">Redirecting to Login in 3 seconds...</p>
             </div>
+          ) : (
+            <>
+              <h2 className="setnew-title">Set a new password</h2>
+              <p className="setnew-subtitle">
+                Your previous password has been reset. Please set a new password for your account.
+              </p>
+             
+              <div className="setnew-input-group">
+                <label className="setnew-label">New password</label>
+                <div className="setnew-password-container">
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Password" 
+                    className="setnew-input" 
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPassword(!showPassword)} 
+                    className="setnew-password-toggle"
+                  >
+                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                  </button>
+                </div>
+              </div>
 
-            <div className="password-input-container">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                className="input-field"
-                placeholder="Confirm New Password"
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                required
-              />
-              <button
-                type="button"
-                className="password-toggle"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              <div className="setnew-input-group">
+                <label className="setnew-label">Confirm password</label>
+                <div className="setnew-password-container">
+                  <input 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    placeholder="Password" 
+                    className="setnew-input"
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
+                    className="setnew-password-toggle"
+                  >
+                    {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                  </button>
+                </div>
+              </div>
+
+              <button className="setnew-button" onClick={handleSubmit}>
+                Set password
               </button>
-            </div>
-          </div>
-
-          <div className="resend-section">
-            <span>Didn't receive code?</span>
-            <a href="#" onClick={handleResendCode}>Resend</a>
-          </div>
-
-          <button type="submit" className="verify-button">
-            Verify
-          </button>
-
-          <div className="back-to-login">
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate("/login"); }}>
-              Back to login
-            </a>
-          </div>
-        </form>
-
-        <div className="footer">
-          <a href="/terms">Terms and Conditions</a>
-          <a href="/privacy">Privacy and Policy</a>
+            </>
+          )}
         </div>
+      </div>
+      
+      <div className="setnew-right-section">
+        <img src="/images/Forgotimg.png" alt="Illustration" className="setnew-illustration" />
       </div>
     </div>
   );
 };
 
-export default SetNewPassword; 
+export default SetNewPasswordPage;

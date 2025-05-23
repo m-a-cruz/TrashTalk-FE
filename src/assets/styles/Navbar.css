@@ -52,7 +52,8 @@
   margin-left: 1rem;
   gap: 50px;
   align-items: center;
-  justify-content: flex-start
+  justify-content: flex-end;
+  margin-left: 30%;
 }
 
 .nav-links button {

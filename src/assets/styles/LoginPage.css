@@ -4,6 +4,7 @@
     display: flex;
     background-color: #fcfcff;
 }
+
 .input-with-icon {
   position: relative;
   display: flex;
@@ -22,19 +23,35 @@
     padding-right: 10px; /* Optional: Add space for right padding */
 }
 
+/* Updated login container - now appears on the LEFT */
+.login-container {
+    flex: 1;
+    max-width: 700px;
+    height: 100%;
+    background: #ffffff; /* Changed from red to white */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    box-sizing: border-box;
+    min-height: 100vh;
+    order: 1; /* Ensures it appears first (left) */
+}
 
-/* .image-section {
+/* Updated image section - now appears on the RIGHT */
+.image-section {
     flex: 1;
     min-height: 100vh;
     width: 100%;
     position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #f5f5f5;
     display: flex;
     align-items: center;
     justify-content: center;
-} */
+    order: 2; /* Ensures it appears second (right) */
+}
 
 .image-section::before {
     content: '';
@@ -43,25 +60,15 @@
     left: 0;
     right: 0; 
     bottom: 0;
-    background: rgba(68, 66, 66, 0.3);
-}
 
-/* .image-content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: white;
-    padding: 20px;
-    width: 100%;
-    max-width: 500px;
-} */
+}
 
 .app-title {
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-family: "Arial Black", Helvetica;
+    font-family: "Poppins-Regular", Helvetica;
     font-size: 48px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -75,19 +82,17 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.login-container {
-    flex: 1;
-    max-width: 700px;
-    height: 100%;
-    background: #f70000;    
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-    box-sizing: border-box;
-    min-height: 100vh;
+.pagetitle{
+     color: #000000;
+    font-family: "Poppins-Medium", Helvetica;
+    font-size: 1rem;
+    margin-top: 50px;
+    font-weight: 700;
+}
+
+.appititle{
+    height: 100px;
+    width: 100px;
 }
 
 .garbage-bag-img {
@@ -96,11 +101,12 @@
     object-fit: cover;
 }
 
-.page-title {
-    color: #000000;
+.binthere {
+    color: #1a6921;
     font-family: "Poppins-Medium", Helvetica;
-    font-size: 55px;
-    margin-bottom: 85px;
+    font-size: 2rem;
+    margin-bottom: 1px;
+    font-weight: 700;
 }
 
 .login-form {
@@ -120,7 +126,7 @@
     font-family: "Poppins-Regular", Helvetica;
     font-size: 16px;
     color: #000000;
-    background: #0a0a0a;
+    background: #ffffff; /* Changed from black to white */
     outline: none;
     transition: border-color 0.2s ease;
     box-sizing: border-box;
@@ -197,6 +203,7 @@
     text-align: center;
     font-family: "Poppins-Regular", Helvetica;
     font-size: 15px;
+    margin-bottom: 10%;
 }
 
 .register-text {
@@ -253,6 +260,7 @@
     .image-section {
         width: 100%;
         min-height: 50vh;
+        order: 1; /* Image goes to top on mobile */
     }
 
     .login-container {
@@ -260,6 +268,7 @@
         padding: 32px 24px;
         border-radius: 0;
         box-shadow: none;
+        order: 2; /* Login form goes below image on mobile */
     }
 
     .image-content {
@@ -286,24 +295,6 @@
     padding-right: 45px;
 }
 
-/* .password-toggle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: #666666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.password-toggle:hover {
-    color: #139637;
-} */
 .password-toggle {
     font-weight: bold;
     position: absolute;
@@ -342,8 +333,6 @@
   gap: 8px;
   padding: 5px;
   margin: 0 0 24px;
-  /* background-color: #fee2e2; */
-  /* border: 1px solid #ef4444; */
   border-radius: 8px;
   color: #dc2626;
   font-size: 14px;

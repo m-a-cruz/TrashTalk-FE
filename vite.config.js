@@ -7,10 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/socket.io': {
-        target: `${process.env.VITE_SOCKET_URL}`,
+        target: 'https://trashtalk-be-gas-production.up.railway.app',
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       }
     }
   }
 })
+
+

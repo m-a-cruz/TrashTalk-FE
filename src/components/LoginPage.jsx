@@ -73,13 +73,16 @@ const LoginPage = () => {
       </div>
       <div className="login-container">
       {/* <h1 className="app-title">TrashTalk</h1> */}
+      
       <img 
-  src="/images/TrashTalk.png" 
+  src="/images/BINLOGO.png" 
   alt="TrashTalk Logo" 
   className="appititle"
-/>
+  
+/> <h2 className="binthere">Bin There, <br></br> Done That</h2>
+          
 
-        <h2 className="page-title">Log In</h2>
+        <h2 className="pagetitle">Log In To Your Account</h2>
 
         <form onSubmit={handleLogin} className="login-form">
           
