@@ -16,13 +16,14 @@ const Monitor = () => {
 
   useEffect(() => {
     fetchData();
-    socket.on("processed_image", (data) => {
-      console.log("Image processed data:", data);
-      // setData((prev) => [data, ...prev]);
-      // setDetections((prev) => [data.detections, ...prev]);
+    socket.on("image_processed", (data) => {
+      data = JSON.parse(data);
+      setData(data);
+      setDetections((data.detected_objects || []));
+      setLoading(false);
+      fetchData();
     });
 
-    
     return () => {
       socket.off("image_processed");
     }

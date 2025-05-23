@@ -22,35 +22,33 @@ const NotificationIcon = () => {
   // Fetch and listen to new notifications
   useEffect(() => {
     fetchNotifications();
-    socket.on("notifications", (data) => {
-      data = JSON.parse(data);
-      console.log("Socket connected:", socket.id);
-      setNotifications(
-        data
-          .filter((n) => n.data?.status !== "Deleted")
-          .map((n) => ({
-            ...n,
-            id: n._id?.$oid,
-            timestamp: new Date(n.timestamp),
-          }))
-      );
-    });
+    // socket.on("notifications", (data) => {
+    //   data = JSON.parse(data);
+    //   // console.log("Socket connected:", socket.id);
+    //   setNotifications(
+    //     data
+    //       .filter((n) => n.data?.status !== "Deleted")
+    //       .map((n) => ({
+    //         ...n,
+    //         id: n._id?.$oid,
+    //         timestamp: new Date(n.timestamp),
+    //       }))
+    //   );
+    // });
 
     socket.on("new_notification", (data) => {
-      console.log((JSON.parse(data)));
+      // console.log((JSON.parse(data)));
       data = JSON.parse(data);
       setNotifications((prev) => [data, ...prev]);
-      if (data.data?.status === "Active" && data.data?.type !== "Safe") {
+      if (data.data?.status === "Active" && data.data?.type !== "Safe" && data.data?.type !== "Info") {
         setAlertNotification(data);
         setShowModal(true);
       }
-      console.log("Alert Notification:", data);
     });
     socket.on("updated_notification", (data) => {
       setNotifications((prev) =>
         prev.map((n) => (n._id?.$oid === data._id?.$oid ? { ...n, ...data } : n))
       );
-      console.log(socket.id)
     });
 
     return () => {
