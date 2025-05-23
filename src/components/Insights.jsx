@@ -67,11 +67,6 @@ const Insights = () => {
           <div className="insights-details">
             <div className="insights-summary">
               <h3>Insights and Summaries</h3>
-              <div className="status-indicators">
-                <span className="status-dot safe">Safe</span>
-                <span className="status-dot caution">Caution</span>
-                <span className="status-dot alert">Alert</span>
-              </div>
               <ul className="insights-list">
                 {data.insights?.map((insight, index) => (
                   <li key={index} className={`insight-item ${insight[index]}`}>
