@@ -229,17 +229,23 @@ const NotificationIcon = () => {
       {showModal && alertNotification && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <h3>⚠️ Alert Notification</h3>
-            <p>
-              <strong>Time:</strong> {new Date(alertNotification.timestamp?.$date || Date.now()).toLocaleString()}
+            <div style={{ textTransform: 'uppercase', textAlign: 'center', marginBottom: '20px' }}>
+              <FaExclamationCircle color="red" size={90} style={{ marginBottom: '0.1px' }} />
+              {/* <h3 style={{fontSize: '24px', fontWeight: 'bold', textTransform: 'uppercase', margin: 0 }}>Alert Notification</h3> */}
+            </div>
+
+            <p style={{textTransform: 'uppercase', fontSize: '50px', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: 'black' }}>
+              {alertNotification.data?.type}
             </p>
-            <p>
-              <strong>Type:</strong> {alertNotification.data?.type}
+    
+            <p style={{ fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: 'red' }}>
+              <strong></strong> {alertNotification.data?.message}
             </p>
-            <p>
-              <strong>Message:</strong> {alertNotification.data?.message}
+
+            <p style={{textTransform: 'uppercase', fontSize: '20px', fontWeight: 'bold', textAlign: 'center', marginBottom: '15px', color: 'black' }}>
+              <strong></strong> {new Date(alertNotification.timestamp?.$date || Date.now()).toLocaleString()}
             </p>
-            <button onClick={handleClose}>Close</button>
+            <button onClick={handleClose} style={{ backgroundColor: 'red', padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Close</button>
           </div>
         </div>
       )}
