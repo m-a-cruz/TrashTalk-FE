@@ -13,12 +13,12 @@ const Navbar = () => {
         <div className="logo">
         <img src="/images/BINLOGO1.png" alt="Logo" className="logo-image" />
           <span className="logo-text"></span>
-        </div>
-        <div className="nav-links">
+          <div className="nav-links">
           <button onClick={() => navigate("/dashboard")}>Dashboard</button>
           <button onClick={() => navigate("/monitor")}>Monitor</button>
           <button onClick={() => navigate("/insights")}>Insights</button>
           <button onClick={() => navigate("/reports")}>Reports</button>
+        </div>
         </div>
       </div>
       
