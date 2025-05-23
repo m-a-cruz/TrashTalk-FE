@@ -18,15 +18,30 @@ const NotificationIcon = () => {
   const API = import.meta.env.VITE_GAS_API_URL;
   const [showModal, setShowModal] = useState(false);
   const [alertNotification, setAlertNotification] = useState(null);
+  
   // Fetch and listen to new notifications
   useEffect(() => {
     fetchNotifications();
+    socket.on("notifications", (data) => {
+      data = JSON.parse(data);
+      console.log("Socket connected:", socket.id);
+      setNotifications(
+        data
+          .filter((n) => n.data?.status !== "Deleted")
+          .map((n) => ({
+            ...n,
+            id: n._id?.$oid,
+            timestamp: new Date(n.timestamp),
+          }))
+      );
+    });
 
     socket.on("new_notification", (data) => {
-      console.log(data)
+      console.log((JSON.parse(data)));
+      data = JSON.parse(data);
       setNotifications((prev) => [data, ...prev]);
       if (data.data?.status === "Active" && data.data?.type !== "Safe") {
-        setAlertNotification((data));
+        setAlertNotification(data);
         setShowModal(true);
       }
       console.log("Alert Notification:", data);
@@ -124,7 +139,8 @@ const NotificationIcon = () => {
 
   // Close modal for alert notification
   const handleClose = async () => {
-    const success = await updateData(alertNotification._id?.$oid, "Read");
+    console.log(alertNotification);
+    const success = await updateData(alertNotification._id, "Read");
     if (success) {
       setShowModal(false);
       setAlertNotification(null);
@@ -217,7 +233,7 @@ const NotificationIcon = () => {
           <div className="modal-box">
             <h3>⚠️ Alert Notification</h3>
             <p>
-              <strong>Status:</strong> {alertNotification.data?.status}
+              <strong>Time:</strong> {new Date(alertNotification.timestamp?.$date || Date.now()).toLocaleString()}
             </p>
             <p>
               <strong>Type:</strong> {alertNotification.data?.type}
